@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style>
+			body {
+	font-family: "Palatino Linotype", Palatino, Arial, sans-serif;
+}
+h1, h2, h3 {
+	font-weight: 400;
+	margin-bottom: 0;
+}
+.remark-slide-content h1 { font-size: 3em; }
+.remark-slide-content h2 { font-size: 2.4em; }
+.remark-slide-content h3 { font-size: 1.8em; }
+.remark-slide-content p { font-size: 1.4em; text-align: justify; }
+.remark-slide-content ul > li, .remark-slide-content ol > li {
+    font-size: 1.2em; 
+    margin-top: 0.6em;
+    text-align: justify;
+    line-height: 1.25em;
+}
+.remark-slide-content li li { font-size: 1em; }
+.remark-slide-content li ul, .remark-slide-content li ol { margin-top: 0.6em; }
+.footnote {
+	position: absolute;
+	bottom: 3em;
+}
+.red { color: #fa0000; }
+.large { font-size: 2em; }
+a, a > code {
+	text-decoration: none;
+}
+.remark-slide-content code {
+  background: none repeat scroll 0 0 #F8F8FF;
+  border: 1px solid #DEDEDE;
+  border-radius: 3px 	;
+  padding: 0 0.2em;
+  line-height: normal;
+}
+.remark-code, .remark-inline-code { font-family: "Bitstream Vera Sans Mono", "Courier", monospace; }
+.remark-code-line-highlighted, .remark-code-span-highlighted { background-color: #F8EEC7; } /* B0CDE7 */
+.pull-left {
+	float: left;
+	width: 47%;
+}
+.pull-right {
+	float: right;
+	width: 47%;
+}
+.pull-right ~ p {
+	clear: both;
+}
+#slideshow .slide .content code {
+	font-size: 0.8em;
+}
+#slideshow .slide .content pre code {
+	font-size: 0.9em;
+	padding: 15px;
+}
+.main-title, .title {
+	background: #272822;
+	color: #777872;
+	text-shadow: 0 0 20px #333;
+}
+.main-title p {
+    text-align: center;
+}
+.title h1, .title h2, .main-title h1, .main-title h2 {
+	color: #f3f3f3;
+	line-height: 0.8em;
+}
+/* Custom */
+.remark-code {
+	display: block;
+	padding: 0.5em;
+    font-size: 20px;
+}
+img {
+    display: block;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+    vertical-align: middle;
+}
+blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin-left: 1.5em;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+}
+blockquote p {
+  display: inline;
+}
+table {
+    border-collapse: collapse;
+    margin-top: 1.5em
+}
+table td, table th {
+    vertical-align: top;
+    border: 1px solid #AAAAAA;
+    padding: 5px 5px;
+}
+
+		</style>
+	</head>
+	<body>
+		<textarea id="source">
+class: center, middle, main-title
+
+# Software Engineering
+Introduction
+
+---
+## Today
+
+- Overview of software engineering and why we study it
+
+---
+## Some alternative definitions
+
+> Multi-person construction of multi-version software.
+> -- <cite>David Parnas</cite>
+
+---
+## Some alternative definitions
+
+> The construction of useful IT systems, by teams of people, with limited resources.
+> -- <cite>John Nicholls</cite>
+
+---
+## Some alternative definitions
+
+> The application of a systematic, disciplined, quantifiable approach to the development, operation, and maintenance of software.
+> -- <cite>IEEE</cite>
+
+---
+## First definition
+
+1969 - NATO Software Engineering Conference:
+> Software engineering is the establishment and use of sound engineering principles in order to obtain economically,
+> software that is reliable, maintainable and works efficiently on real machines.
+>
+> -- <cite>Software Engineering: A Report on a Conference Sponsored by the NATO Science Committee, NATO, 1969</cite>
+
+---
+## Background
+
+> The phrase ‘software engineering’ was **deliberately chosen as being provocative**,
+> in implying the need for software manufacture to be based on the types of theoretical foundations
+> and practical disciplines, that are traditional in the established branches of engineering.
+>
+> -- <cite>Software Engineering: A Report on a Conference Sponsored by the NATO Science Committee, NATO, 1969</cite>
+
+---
+## Why provocative?
+
+Let's look at the definition again:
+
+> Software engineering is the establishment and use of sound engineering principles in order to obtain
+> **economically**, software that is **reliable**, **maintainable** and **works efficiently** on real machines.
+
+Notice some hints of software problems:
+- Expensive
+- Unreliable
+- Unmaintainable
+- Slow/Inefficient
+
+---
+## "The Software Crisis"
+
+- The same conference coins the term "The Software Crisis"
+- Concerns raised:
+   - Gap between promises to users and performance achieved
+   - Problems producing systems on schedule and to specification
+   - Seemingly unavoidable fallibility of large software
+   - More examples of bad large systems than good
+   - Demands in the industry going ahead faster than our progress
+
+---
+## Dijkstra on software crisis
+
+> The major cause of the software crisis is that the machines have become several orders of magnitude more powerful!
+> To put it quite bluntly: as long as there were no machines, programming was no problem at all;
+> when we had a few weak computers, programming became a mild problem, and now we have gigantic computers,
+> programming has become an equally gigantic problem.
+>
+> -- <cite>Edsger Dijkstra, The Humble Programmer (EWD340), Communications of the ACM</cite>
+
+---
+## The world of today
+
+- SE is still a relatively young field
+- Hardware and resources are efficient, readily available, and cheap
+- Software is critical to society
+- Demand for software and expectations for it are ever growing
+
+---
+## At the same time
+
+- Software is extremely expensive
+- Most projects are delivered over time, over budget or below functionality
+- Software is often of low quality
+
+Basically
+- We are still unable to produce or maintain high-quality software at reasonable price and on schedule
+
+---
+## Why is it hard?
+
+- There is no single "right way" to engineer software systems
+	- The combination of constraints within a project is probably unique
+- Scale
+	- Both systems and organizations producing them are larger
+	- Systems rarely exist in isolation
+- Communication
+	- Distributed
+	- Lack of well-understood representations of software
+- The rate of change in the business is higher
+
+---
+## Why study software engineering?
+
+- Software is critical to society
+- The current state of affairs *can* and *should* be improved
+- Building large software systems is hard
+	- Yet rewarding
+	- But doing it without discipline is madness
+- There's money to be earned
+
+---
+## Aspects of software engineering
+
+- Processes, methods and techniques that help turn a concept into well-structured software that can evolve over time
+- Working with limited time and resources
+- Meeting customer needs
+- Managing risk
+- Teamwork and communication
+
+---
+## Ties to many other fields
+
+- computer science (algorithms, data structures, languages, tools)
+- management (project management, scheduling, estimating)
+- economics/marketing (prioritizing investments, pricing)
+- communication (organizational structure, stakeholders)
+- law (compliance, patents, licenses, copyrights)
+- psychology (personalities, styles, usability, what is fun)
+- sociology (localization, diversity)
+- art (user interface design)
+- ethics (AI, profiling, use of personal data, public safety)
+- ...
+
+---
+## Typical roles in software projects
+
+- customer - wants software
+- managers - plan and coordinate
+- developers - design and build software
+- testers - perform quality assurance (QA)
+- users - use software
+
+---
+## What is a software project
+
+- Balance between
+	- Features and their quality
+	- Calendar time
+	- Resources
+- "Good, fast, cheap... choose two" :)
+
+---
+## Recap
+
+- SE is about teams building and evolving high-quality software, while working under constraints unique to their circumstance.
+- There is no single "right way" to engineer software systems
+
+---
+## Next time
+
+- Software Lifecycle
+
+		</textarea>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/remark/0.14.0/remark.min.js"></script>
+		<script>
+			var slideshow = remark.create({
+                highlightStyle: 'github',
+                highlightLines: 'true',
+                highlightSpans: 'true'
+            });
+		</script>
+		<script></script>
+	</body>
+</html>
