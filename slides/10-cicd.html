@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style>
+			body {
+	font-family: "Palatino Linotype", Palatino, Arial, sans-serif;
+}
+h1, h2, h3 {
+	font-weight: 400;
+	margin-bottom: 0;
+}
+.remark-slide-content h1 { font-size: 3em; }
+.remark-slide-content h2 { font-size: 2.4em; }
+.remark-slide-content h3 { font-size: 1.8em; }
+.remark-slide-content p { font-size: 1.4em; text-align: justify; }
+.remark-slide-content ul > li, .remark-slide-content ol > li {
+    font-size: 1.2em; 
+    margin-top: 0.6em;
+    text-align: justify;
+    line-height: 1.25em;
+}
+.remark-slide-content li li { font-size: 1em; }
+.remark-slide-content li ul, .remark-slide-content li ol { margin-top: 0.6em; }
+.footnote {
+	position: absolute;
+	bottom: 3em;
+}
+.red { color: #fa0000; }
+.large { font-size: 2em; }
+a, a > code {
+	text-decoration: none;
+}
+.remark-slide-content code {
+  background: none repeat scroll 0 0 #F8F8FF;
+  border: 1px solid #DEDEDE;
+  border-radius: 3px 	;
+  padding: 0 0.2em;
+  line-height: normal;
+}
+.remark-code, .remark-inline-code { font-family: "Bitstream Vera Sans Mono", "Courier", monospace; }
+.remark-code-line-highlighted, .remark-code-span-highlighted { background-color: #F8EEC7; } /* B0CDE7 */
+.pull-left {
+	float: left;
+	width: 47%;
+}
+.pull-right {
+	float: right;
+	width: 47%;
+}
+.pull-right ~ p {
+	clear: both;
+}
+#slideshow .slide .content code {
+	font-size: 0.8em;
+}
+#slideshow .slide .content pre code {
+	font-size: 0.9em;
+	padding: 15px;
+}
+.main-title, .title {
+	background: #272822;
+	color: #777872;
+	text-shadow: 0 0 20px #333;
+}
+.main-title p {
+    text-align: center;
+}
+.title h1, .title h2, .main-title h1, .main-title h2 {
+	color: #f3f3f3;
+	line-height: 0.8em;
+}
+/* Custom */
+.remark-code {
+	display: block;
+	padding: 0.5em;
+    font-size: 20px;
+}
+img {
+    display: block;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+    vertical-align: middle;
+}
+blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin-left: 1.5em;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+}
+blockquote p {
+  display: inline;
+}
+table {
+    border-collapse: collapse;
+    margin-top: 1.5em
+}
+table td, table th {
+    vertical-align: top;
+    border: 1px solid #AAAAAA;
+    padding: 5px 5px;
+}
+
+		</style>
+	</head>
+	<body>
+		<!--
+			 - Remark Wiki: https://github.com/gnab/remark/wiki
+		 -->
+		<textarea id="source">
+class: center, middle, main-title
+
+# Software Deployment
+CI/CD pipelines
+
+---
+## Today
+- Course organization
+    - Project template updated for 3rd assignment
+    - Deadline is 4th/6th of December
+- Content
+    - How do we go from source code to working software?
+    - Continuous Integration
+    - Continuous Deployment
+- Questions, ideas, comments
+    - [Sli.do #VUSE1910](https://app.sli.do/event/vpgfoqwj)
+
+---
+## Basic problem
+<br>
+.center[**Source code**]
+
+.center[|]
+.center[*????*]
+.center[↓]
+
+.center[**Software available to end-user**]
+
+--
+<br>
+<br>
+.center[Ideally, instantly and automatically]
+
+---
+## Two main steps
+
+.center[**Source code**]
+
+.center[|]
+.center[*build and package*]
+.center[↓]
+
+.center[**Some binary artifact**]
+
+.center[|]
+.center[*deploy*]
+.center[↓]
+
+.center[**Software available to end-user**]
+
+---
+class: center, middle
+
+# Build and package
+
+---
+## Version control system
+
+- Discussed in passing earlier
+
+--
+- Also known as *VCS*, *source control*, or by product name
+    - **Git**, SVN, CVS, Mercurial, Jazz, etc.
+--
+- Idea
+    - Single source of truth for versioned files
+    - Make it easier for developers to work in parallel
+--
+- Should contain everything needed to build the system
+
+--
+- Everyone should commit to the baseline often (e.g. every day)
+
+???
+Librarian and locks
+
+---
+## From source to binary package
+----
+<img src="10-build.svg">
+
+---
+## Build automation tools
+
+- **Main goal**: save time and reduce errors
+
+--
+- Secondary goals
+    - Dependency management
+    - Enforcing process
+    - Repeatable builds
+--
+- Some configuration required
+    - Which compiler version to use?
+    - Where are the sources?
+    - What dependencies are required?
+    - ...
+--
+- Configuration can be *imperative* (steps) or *declarative* (goals)
+
+---
+## Dependencies example
+
+<img src="10-dependencies.png">
+
+---
+## Build config example
+
+```groovy
+apply plugin: 'java'
+sourceCompatibility = JavaVersion.VERSION_11
+
+repositories {
+    mavenLocal()
+}
+
+dependencies {
+    implementation
+        'org.springframework.boot:spring-boot-starter-web'
+    implementation
+        'com.github.java-json-tools:json-schema-validator'
+    testImplementation
+        'org.junit.jupiter:junit-jupiter'
+    testRuntime
+        'com.tngtech.archunit:archunit-junit5-engine:0.11.0'
+}
+
+test {
+    useJUnitPlatform()
+    exclude '**/*IntegrationTest*'
+}
+```
+---
+## Continuous integration (CI)
+
+An almost universally used practice.
+
+--
+- Maintain a code repository
+
+--
+- Commit to baseline often
+
+--
+- Build every commit to baseline automatically
+
+--
+- The build should be fast and self-testing
+
+--
+- Make everyone aware of the results of the latest build
+
+--
+- Make the artifacts produced accessible for use, testing and deployment
+
+---
+## Build/CI server example
+
+<img src="10-jenkins.png">
+
+---
+class: center, middle
+
+# Deploy software build to users
+
+---
+## Deployment environment
+
+- An environment where (into which) a software package is deployed
+- This can include
+    - Hardware
+    - OS
+    - Any required software
+    - Any required configuration
+---
+## Typical environments used
+
+<img src="10-envs.svg" style="margin: -40pt 0 -40pt 0">
+
+--
+- Local/Development
+    - Developer's own environment
+--
+- Integration/Test
+    - Latest baseline build deployed automatically
+--
+- Staging/Acceptance/Pre-production
+    - Production replica for release candidate testing or production troubleshooting
+--
+- Production/Live
+    - Main environment with real users
+
+---
+## Trend 1: Machines
+
+<img src="10-vms.svg">
+
+---
+## Trend 2: Infrastructure as code
+
+- Trend
+    - From one-off servers
+--
+    - Towards standard machines using commodity hardware
+--
+    - Towards managing and provisioning servers through config files
+        - Rather than physically configuring machines using interactive tools
+--
+- Notice the same goal: save time and reduce errors
+
+--
+- Enabler: apply development practices to config files
+    - Files can be versioned, branched, reviewed, released, etc.
+--
+- Example ([Terraform](https://github.com/terraform-providers/terraform-provider-aws/blob/master/examples/two-tier/main.tf))
+---
+## Deployment today
+
+- Containers are the primary vehicle of deployment
+    - *Docker* being the primary runtime
+--
+- Container benefits
+    - Less overhead
+    - Increased portability
+    - Developer productivity
+--
+- Deployed either on container services
+    - AWS Elastic Container Service
+--
+- ... or on own infrastructure, defined as code
+
+---
+## Continuous delivery/deployment
+
+- Expand on ideas of CI
+
+--
+- Both referred to as CD
+
+--
+- Continuous delivery
+    - Every working version **can be** depoyed
+--
+- Continuous deployment
+    - Every working version **is** deployed
+
+---
+## Benefits of CD
+
+- Faster time to market
+- Low risk releases
+- Higher degree of automation
+- Happier teams
+
+---
+## UML deployment diagram
+
+- Is a structure diagram
+
+--
+- Models physical nodes and what artifacts are deployed on them
+
+--
+- [Example](https://www.uml-diagrams.org/web-application-clusters-uml-deployment-diagram-example.html?context=depl-examples)
+
+
+---
+## Key takeaways
+
+- Two main phases: building some artifact and then deploying it
+
+--
+- Main goal behind automation: save time and reduce errors
+
+--
+- Declarative configuration is both attractive and popular
+
+--
+- Learn *git*, version control everything, integrate often
+
+--
+- Have multiple environments and a CI/CD pipeline
+
+--
+- Use UML deployment diagram to describe how artifacts map to nodes
+
+---
+## Reading assignment
+
+Mandatory:
+
+- 17 min talk: [Continuous Delivery by Martin Fowler](https://www.youtube.com/watch?v=aoMfbgF2D_4)
+- Tutorial: [Gitflow branching strategy](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow)
+- Wiki-like entry: [Continuous Integration by Martin Fowler](https://www.martinfowler.com/articles/continuousIntegration.html)
+
+Recommended:
+
+- Wiki-like entry: [Infrastructure as Code by Martin Fowler](https://www.martinfowler.com/bliki/InfrastructureAsCode.html)
+- Book: [Continuous Inegration](https://www.goodreads.com/book/show/1311542.Continuous_Integration)
+- Book: [Continuous Delivery](https://www.goodreads.com/book/show/8686650-continuous-delivery)
+
+---
+class: middle, center
+# Questions?
+
+---
+## Next time
+
+- Software configuration management and operations
+		</textarea>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/remark/0.14.0/remark.min.js"></script>
+		<script>
+			var slideshow = remark.create({
+                highlightLanguage: 'java',
+                highlightStyle: 'github',
+                highlightLines: 'true',
+                highlightSpans: 'true',
+				countIncrementalSlides: false
+            });
+		</script>
+		<script></script>
+	</body>
+</html>

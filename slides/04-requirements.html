@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style>
+			body {
+	font-family: "Palatino Linotype", Palatino, Arial, sans-serif;
+}
+h1, h2, h3 {
+	font-weight: 400;
+	margin-bottom: 0;
+}
+.remark-slide-content h1 { font-size: 3em; }
+.remark-slide-content h2 { font-size: 2.4em; }
+.remark-slide-content h3 { font-size: 1.8em; }
+.remark-slide-content p { font-size: 1.4em; text-align: justify; }
+.remark-slide-content ul > li, .remark-slide-content ol > li {
+    font-size: 1.2em; 
+    margin-top: 0.6em;
+    text-align: justify;
+    line-height: 1.25em;
+}
+.remark-slide-content li li { font-size: 1em; }
+.remark-slide-content li ul, .remark-slide-content li ol { margin-top: 0.6em; }
+.footnote {
+	position: absolute;
+	bottom: 3em;
+}
+.red { color: #fa0000; }
+.large { font-size: 2em; }
+a, a > code {
+	text-decoration: none;
+}
+.remark-slide-content code {
+  background: none repeat scroll 0 0 #F8F8FF;
+  border: 1px solid #DEDEDE;
+  border-radius: 3px 	;
+  padding: 0 0.2em;
+  line-height: normal;
+}
+.remark-code, .remark-inline-code { font-family: "Bitstream Vera Sans Mono", "Courier", monospace; }
+.remark-code-line-highlighted, .remark-code-span-highlighted { background-color: #F8EEC7; } /* B0CDE7 */
+.pull-left {
+	float: left;
+	width: 47%;
+}
+.pull-right {
+	float: right;
+	width: 47%;
+}
+.pull-right ~ p {
+	clear: both;
+}
+#slideshow .slide .content code {
+	font-size: 0.8em;
+}
+#slideshow .slide .content pre code {
+	font-size: 0.9em;
+	padding: 15px;
+}
+.main-title, .title {
+	background: #272822;
+	color: #777872;
+	text-shadow: 0 0 20px #333;
+}
+.main-title p {
+    text-align: center;
+}
+.title h1, .title h2, .main-title h1, .main-title h2 {
+	color: #f3f3f3;
+	line-height: 0.8em;
+}
+/* Custom */
+.remark-code {
+	display: block;
+	padding: 0.5em;
+    font-size: 20px;
+}
+img {
+    display: block;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+    vertical-align: middle;
+}
+blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin-left: 1.5em;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+}
+blockquote p {
+  display: inline;
+}
+table {
+    border-collapse: collapse;
+    margin-top: 1.5em
+}
+table td, table th {
+    vertical-align: top;
+    border: 1px solid #AAAAAA;
+    padding: 5px 5px;
+}
+
+		</style>
+	</head>
+	<body>
+		<!--
+			 - Remark Wiki: https://github.com/gnab/remark/wiki
+		 -->
+		<textarea id="source">
+class: center, middle, main-title
+
+# Software Requirements
+Requirements analysis and specification
+
+---
+## Today
+
+- Questions: [Sli.do #VUSE1904](https://app.sli.do/event/06esq6v8/live/questions)
+
+--
+- What are software requirements?
+
+--
+- Why do we need them?
+
+--
+- What is requirements analysis?
+
+--
+- How do we document requirements?
+
+---
+## Software requirement
+
+> 1. Software capability **needed by a user** to solve a problem or to achieve an objective.
+> 2. Software capability that **must be met** or posessed by a system or system component
+> **to statisfy a** contract, standard, specification, or other **formally imposed document**.
+> <br><br>-- <cite>Systems and software engineering - Vocabulary, ISO 24765:2017</cite>
+
+---
+## Software requirement
+
+> Requirements provide the **stakeholders’ view** of what they **expect** the software
+system to provide. They indicate **what** the software system must do, but do **not**
+explicitly express **how** it must be done.
+> <br><br>-- <cite>The Essentials of Modern Software Engineering, ACM Books, 2019</cite>
+
+---
+## Types of requirements
+
+- Functional - what should software do?
+	- Behaviour between inputs and outputs
+
+--
+- Non-functional - what should software be like?
+	- Also known as *quality attributes*
+    - Qualities observable during operation
+	- Qualities embodied in the static structure
+	- [Some example categories](https://en.wikipedia.org/wiki/Non-functional_requirement#Examples)
+
+---
+## Why do we need requirements?
+
+- Customers - agreement on scope
+
+--
+- Managers - planning and control
+
+--
+- Designers - primary input for design
+
+--
+- Programmers - implementing the right thing
+
+--
+- Testers - quality assurance
+
+---
+## Requirements analysis
+
+- An essential activity in any software project
+	- The single most important task in a large software project
+
+--
+- Covers
+	- Eliciting (gathering, discovering) requirements
+	- Analyzing (refining, improving) requirements
+	- Recording (documenting) requirements
+
+---
+### Eliciting requirements
+
+- Not just simply asking
+
+--
+- Iterative dialog between end-users and analysts
+
+--
+- [Many tools and techniques](https://www.bridging-the-gap.com/elicitation-techniques-business-analysts/)
+
+--
+- Learn how users work
+	- Talk to them
+	- Work with them
+	- Read process descriptions, manuals, etc.
+
+--
+- Ask questions to "dig" for requirements
+
+--
+- Use sketches or prototypes
+
+--
+- Think about why users do something, not just what
+
+---
+### Analyzing requirements
+
+- Ensure [quality of requirements](https://www.guru99.com/learn-software-requirements-analysis-with-case-study.html#3)
+	- correct (functionally)
+
+--
+	- complete (no holes)
+
+--
+	- feasible (technically, legally)
+
+--
+	- verifiable (yes/no)
+
+--
+	- sufficiently detailed
+
+--
+	- prioritized
+
+--
+- Understand technical implications
+
+---
+### Recording requirements
+
+- Content over form
+	- Content - shared mental model of what has to be done
+	- Form - how it is documented
+
+--
+- Some forms
+	- Natural language
+	- Structured natural language
+	- Graphical
+	- Formal specification
+	- A mix of the above
+
+---
+## Form: Natural language
+
+> Users of the system should be able to select folders that are to be excluded from backups.
+
+---
+## Form: Structured natural language
+
+User story:
+
+> **As a** user,
+> **I can** indicate folders not to backup
+> **so that** my backup drive isn't filled up with things I don't need saved.
+
+--
+
+Acceptance test:
+
+> **Given** a list of folders to exclude,
+> **when** backup is performed,
+> **then** backup does not contain excluded folders.
+
+---
+## Form: Structured natural language
+
+Use case (casual template):
+
+- **Title:** Exclude folders from backup
+- **Primary actor:** User
+- **Scenario**:
+    1. User specifies folders to be excluded from backup
+	2. User saves their preferences
+	3. When backup is performed, specified folders are not included
+
+---
+## Form: Graphical
+
+![Default-aligned image](04-state-diagram.svg)
+
+--
+- Free-form diagram or drawing
+- Standard notation (e.g. UML)
+	- [UML diagrams](https://tallyfy.com/uml-diagram/#use-case-diagram): use case, sequence, activity, state machine
+
+---
+## Form: Formal
+
+- Formal specification languages (e.g. Z, OCL)
+
+![Default-aligned image](04-formal.png)
+
+---
+## Key takeaways
+
+- Requirements are user needs and expectations
+
+--
+- Non-functional requirements are just as important as functional
+
+--
+- User involvement and shared understanding of what is required is key to success
+
+--
+- When documenting requirements, focus on content over form
+
+---
+class: middle, center
+# Questions?
+
+---
+## Next time
+
+- Software Architecture
+
+		</textarea>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/remark/0.14.0/remark.min.js"></script>
+		<script>
+			var slideshow = remark.create({
+                highlightStyle: 'github',
+                highlightLines: 'true',
+                highlightSpans: 'true',
+				countIncrementalSlides: false
+            });
+		</script>
+		<script></script>
+	</body>
+</html>

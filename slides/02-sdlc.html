@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style>
+			body {
+	font-family: "Palatino Linotype", Palatino, Arial, sans-serif;
+}
+h1, h2, h3 {
+	font-weight: 400;
+	margin-bottom: 0;
+}
+.remark-slide-content h1 { font-size: 3em; }
+.remark-slide-content h2 { font-size: 2.4em; }
+.remark-slide-content h3 { font-size: 1.8em; }
+.remark-slide-content p { font-size: 1.4em; text-align: justify; }
+.remark-slide-content ul > li, .remark-slide-content ol > li {
+    font-size: 1.2em; 
+    margin-top: 0.6em;
+    text-align: justify;
+    line-height: 1.25em;
+}
+.remark-slide-content li li { font-size: 1em; }
+.remark-slide-content li ul, .remark-slide-content li ol { margin-top: 0.6em; }
+.footnote {
+	position: absolute;
+	bottom: 3em;
+}
+.red { color: #fa0000; }
+.large { font-size: 2em; }
+a, a > code {
+	text-decoration: none;
+}
+.remark-slide-content code {
+  background: none repeat scroll 0 0 #F8F8FF;
+  border: 1px solid #DEDEDE;
+  border-radius: 3px 	;
+  padding: 0 0.2em;
+  line-height: normal;
+}
+.remark-code, .remark-inline-code { font-family: "Bitstream Vera Sans Mono", "Courier", monospace; }
+.remark-code-line-highlighted, .remark-code-span-highlighted { background-color: #F8EEC7; } /* B0CDE7 */
+.pull-left {
+	float: left;
+	width: 47%;
+}
+.pull-right {
+	float: right;
+	width: 47%;
+}
+.pull-right ~ p {
+	clear: both;
+}
+#slideshow .slide .content code {
+	font-size: 0.8em;
+}
+#slideshow .slide .content pre code {
+	font-size: 0.9em;
+	padding: 15px;
+}
+.main-title, .title {
+	background: #272822;
+	color: #777872;
+	text-shadow: 0 0 20px #333;
+}
+.main-title p {
+    text-align: center;
+}
+.title h1, .title h2, .main-title h1, .main-title h2 {
+	color: #f3f3f3;
+	line-height: 0.8em;
+}
+/* Custom */
+.remark-code {
+	display: block;
+	padding: 0.5em;
+    font-size: 20px;
+}
+img {
+    display: block;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+    vertical-align: middle;
+}
+blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin-left: 1.5em;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+}
+blockquote p {
+  display: inline;
+}
+table {
+    border-collapse: collapse;
+    margin-top: 1.5em
+}
+table td, table th {
+    vertical-align: top;
+    border: 1px solid #AAAAAA;
+    padding: 5px 5px;
+}
+
+		</style>
+	</head>
+	<body>
+		<!--
+			 - Remark Wiki: https://github.com/gnab/remark/wiki
+		 -->
+		<textarea id="source">
+class: center, middle, main-title
+
+# Software Lifecycle Models
+Introduction
+
+---
+## Today
+
+- Essential tasks of development
+--
+
+- What is software development lifecycle?
+--
+
+- Some lifecycle models and their tradeoffs
+
+???
+- Last time: Overview of software engineering and why we study it
+
+---
+## Recap: Problem
+
+- Multi-person construction of multi-version software is a complex undertaking
+- Difficult to produce high-quality software at reasonable price and on schedule
+
+???
+What can help us manage this complexity?
+Define essential activities
+
+---
+## Essential activities
+
+--
+
+- Analyzing requirements
+--
+
+- Designing software
+--
+
+- Implementing software
+--
+
+- Testing software
+--
+
+- Maintaining software
+
+???
+- Each phase requires different tools, knowledge, skillset.
+- A lot of ways to split responsibilities.
+- How are these related? What is a good order?
+
+---
+## Software Process
+
+> A process consists of **a set of** interrelated **activities that transform** one or more **inputs
+>  into outputs** while consuming resources to accomplish the transformation.
+> -- <cite>SWEBOK 3.0</cite>
+
+---
+## We can define many processes
+
+A few examples from ISO 12207:
+--
+
+- Acquisition Process
+--
+
+- Decision Management Process
+--
+
+- Software Requirements Analysis Process
+--
+
+- System Architectural Design Process
+--
+
+- Software Audit Process
+--
+
+- Software Operation Process
+--
+
+- Software Disposal Process
+
+???
+ISO 12207 - Systems and software engineering – Software life cycle processes
+
+---
+## What processes should we use?
+
+--
+
+- Ideal process or set of processes does not exist
+--
+
+- Each project or organization should select, adapt, or define their own
+
+---
+## Software Development Lifecycle (SDLC)
+
+> **A set of software processes** used to specify and transform software requirements
+> into a deliverable software product.
+> -- <cite>SWEBOK 3.0</cite>
+
+---
+## Software Product Lifecycle (SPLC)
+
+> Software development lifecycle plus all other inception-to-retirement processes.
+> -- <cite>SWEBOK 3.0</cite>
+
+???
+Deployment, maintenance, configuration management, support, evolution, retirement.
+
+---
+## Lifecycle models
+
+> Life cycle models typically emphasize the **key software processes** within the model
+> **and their** temporal and logical **interdependencies and relationships**.
+> -- <cite>SWEBOK 3.0</cite>
+
+--
+
+In other words:
+- A software lifecycle model is a description of **main activities** carried out in a project,
+**when** and **in what order** they can be started and finished.
+
+---
+## Code-and-fix model
+
+1. General idea
+--
+
+1. Ad-hoc development
+
+--
+1. Release or time/money runs out
+
+???
+Take an informal general product idea and just develop until a product is "ready".
+
+---
+## Is this a useful model?
+
+--
+It depends.
+
+---
+## Code-and-fix model
+
+- Advantages:
+    - No overhead / bureaucracy
+	- See progress quickly
+
+--
+- Disadvantages:
+	- Dangerous
+		- No way to assess progress, predict timing, or manage risks
+		- Unclear scope and quality
+		- Unlikely to accomodate changes
+	- Impossible for large projects
+
+--
+- Consider:
+	- For very small projects
+	- For short-lived prototypes
+
+---
+## What is a good model?
+
+- One that helps us fall into the *Pit of Success*.
+
+--
+
+> *The Pit of Success*: in stark contrast to a summit, a peak, or a journey across a desert
+> to find victory through many trials and surprises,
+> **we want our customers to simply fall into winning practices** by using our platform and frameworks.
+>
+> To the extent that we make it easy to get into trouble we fail.
+> -- <cite>Rico Mariani, MS Research MindSwap, Oct 2003.</cite>
+
+---
+## What is a good model?
+
+In other words:
+- One that leads to better product in less time, with fewer resources
+
+--
+
+Usually through:
+- Aiding communication
+- Helping judge progress
+- Keeping everyone organized
+
+---
+## Waterfall model
+
+![Default-aligned image](02-waterfall.png)
+
+???
+- Circa 1970
+- Feedback from next stage
+
+---
+## Waterfall model
+
+Single, document-driven linear sequence for all the requirements.
+
+--
+- Advantages:
+	- Easy to understand and implement
+	- Identifies deliverables and milestones
+	- Produces comprehensive documentation
+
+--
+- Disadvantages:
+	- Risky
+	- Expensive to change product late
+	- Significant administrative overhead
+
+???
+- Fits other engineering process models (construction)
+- Natural
+- Reinforces good habits (define before design, design before code)
+- Often unrealistic to expect accurate requirements early in project
+- "Swimming upstream" is costly
+- Based on assembly line mentality
+
+---
+## Waterfall model
+
+- Consider:
+	- For complex, but very well-understood projects
+	- For large/mature products and weak teams
+
+---
+## Spiral model
+
+![Default-aligned image](02-spiral.png)
+
+???
+- 1988
+- Key idea: on each iteration identify and solve sub-problems with highest risk
+
+---
+## Spiral model
+
+Waterfall model extended with iterations for managing risks during planning and design.
+
+--
+- Advantages:
+	- Low risk
+	- Reflects iterative nature of development
+	- Good project visibility
+
+--
+- Disadvantages:
+	- Requires expertise in risk analysis and risk management
+	- Significant administrative overhead
+	- Not commonly used
+
+???
+Allows for alternate designs and implementations
+
+---
+## Spiral model
+
+Consider:
+- When risk management is one of primary concerns
+
+---
+## Staged delivery model
+
+![Default-aligned image](02-staged.png)
+
+???
+- very practical, widely used and successful
+- Waterfall-like beginning with short release cycles following.
+- Intermediate deliveries satisfy customers and show progress
+- Feedback, problems visible early
+
+Cons:
+- Product must be decomposable
+- Extra releases cause overhead and require coordination
+
+---
+## Design to schedule model
+
+![Default-aligned image](02-schedule.png)
+
+---
+## Incremental delivery model
+
+![Default-aligned image](02-incremental.png)
+
+???
+- In Exploratory development category
+
+---
+## Evolutionary prototyping model
+
+![Default-aligned image](02-prototyping.png)
+
+???
+- In Throwaway prototyping category
+- key idea: customers are non-technical and do not know what they want
+- very practical, widely used and successful
+- steady signs of progress for customer
+- addresses risk of incorrect user requirements
+- useful when requirements are not known or changing
+- supports early product marketing
+- participatory design, close involvent a must
+- problems with planning
+- temporary fixes become permanent constraints (or unstable prototype becomes final product)
+- easy to fall into code-and-fix
+
+---
+## Family of Agile models
+
+- Agile is not one model
+
+--
+- [Agile Manifesto](https://agilemanifesto.org/)
+
+--
+- Shared features:
+
+--
+	- Continuous incremental deliveries
+
+--
+	- Customer collaboration
+
+--
+	- Embracing change
+
+--
+	- De-emphasised documentation
+
+--
+- Examples: Scrum, XP
+
+???
+Agile manifesto - 2001
+
+---
+## Family of Agile models
+
+- Advantages:
+    - Low overhead
+    - Emphasizes final product
+	- Focuses on teamwork
+
+--
+- Disadvantages:
+	- Difficult to scale
+	- Not always well understood
+	- Projects often have fixed scope and budged
+
+???
+- Fits small-medium projects and teams well
+- Requires close customer involvement
+
+---
+## Key takeaways
+
+- Each model is trying to capture how a project should be run
+
+--
+- Most are variations of a small number of basic models
+
+--
+- There is no ideal model - it's a balance between:
+
+--
+	- Risk exposure
+
+--
+	- Quality and cost control
+
+--
+	- Predictability
+
+--
+	- Visibility of progress
+
+--
+	- Customer involvement
+
+--
+	- Administrative overhead
+
+--
+	- Time to market
+
+---
+## Key takeaways
+
+- Take these models with a grain of salt, and combine or tailor them to your situation
+
+---
+## Reading assignment
+
+Mandatory:
+
+- [Agile Manifesto](https://agilemanifesto.org/) and [Agile Principles](https://agilemanifesto.org/principles.html)
+- [W. Royce. Managing the Development of Large Software Systems](http://www-scf.usc.edu/~csci201/lectures/Lecture11/royce1970.pdf)
+
+Recommended:
+
+- [Software Art Thou by Glenn Vanderburg](https://www.youtube.com/watch?v=RhdlBHHimeM) (video)
+
+---
+class: middle, center
+# Questions?
+
+---
+## Next time
+
+- Software Engineering Management
+
+		</textarea>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/remark/0.14.0/remark.min.js"></script>
+		<script>
+			var slideshow = remark.create({
+                highlightStyle: 'github',
+                highlightLines: 'true',
+                highlightSpans: 'true',
+				countIncrementalSlides: false
+            });
+		</script>
+		<script></script>
+	</body>
+</html>

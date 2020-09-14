@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style>
+			body {
+	font-family: "Palatino Linotype", Palatino, Arial, sans-serif;
+}
+h1, h2, h3 {
+	font-weight: 400;
+	margin-bottom: 0;
+}
+.remark-slide-content h1 { font-size: 3em; }
+.remark-slide-content h2 { font-size: 2.4em; }
+.remark-slide-content h3 { font-size: 1.8em; }
+.remark-slide-content p { font-size: 1.4em; text-align: justify; }
+.remark-slide-content ul > li, .remark-slide-content ol > li {
+    font-size: 1.2em; 
+    margin-top: 0.6em;
+    text-align: justify;
+    line-height: 1.25em;
+}
+.remark-slide-content li li { font-size: 1em; }
+.remark-slide-content li ul, .remark-slide-content li ol { margin-top: 0.6em; }
+.footnote {
+	position: absolute;
+	bottom: 3em;
+}
+.red { color: #fa0000; }
+.large { font-size: 2em; }
+a, a > code {
+	text-decoration: none;
+}
+.remark-slide-content code {
+  background: none repeat scroll 0 0 #F8F8FF;
+  border: 1px solid #DEDEDE;
+  border-radius: 3px 	;
+  padding: 0 0.2em;
+  line-height: normal;
+}
+.remark-code, .remark-inline-code { font-family: "Bitstream Vera Sans Mono", "Courier", monospace; }
+.remark-code-line-highlighted, .remark-code-span-highlighted { background-color: #F8EEC7; } /* B0CDE7 */
+.pull-left {
+	float: left;
+	width: 47%;
+}
+.pull-right {
+	float: right;
+	width: 47%;
+}
+.pull-right ~ p {
+	clear: both;
+}
+#slideshow .slide .content code {
+	font-size: 0.8em;
+}
+#slideshow .slide .content pre code {
+	font-size: 0.9em;
+	padding: 15px;
+}
+.main-title, .title {
+	background: #272822;
+	color: #777872;
+	text-shadow: 0 0 20px #333;
+}
+.main-title p {
+    text-align: center;
+}
+.title h1, .title h2, .main-title h1, .main-title h2 {
+	color: #f3f3f3;
+	line-height: 0.8em;
+}
+/* Custom */
+.remark-code {
+	display: block;
+	padding: 0.5em;
+    font-size: 20px;
+}
+img {
+    display: block;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+    vertical-align: middle;
+}
+blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin-left: 1.5em;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+}
+blockquote p {
+  display: inline;
+}
+table {
+    border-collapse: collapse;
+    margin-top: 1.5em
+}
+table td, table th {
+    vertical-align: top;
+    border: 1px solid #AAAAAA;
+    padding: 5px 5px;
+}
+
+		</style>
+	</head>
+	<body>
+		<!--
+			 - Remark Wiki: https://github.com/gnab/remark/wiki
+		 -->
+		<textarea id="source">
+class: center, middle, main-title
+
+# Software operations and evolution
+
+---
+## Today
+- Course organization
+    - 2nd assignment results are published
+- Content
+    - Two true-ish stories
+    - What goes into running and evolving a software system
+    - Legacy systems and their challenges
+- Questions, ideas, comments
+    - [Sli.do #VUSE1911](https://app.sli.do/event/vpgfoqwj)
+
+---
+## Service catalog
+
+<img src="11-catalog.png">
+
+---
+## Service catalog: Operations
+
+- The catalog is informational and not very important
+--
+
+- Support is provided during working hours (5 days/wk)
+
+--
+- Occasionally something is not displayed properly, then:
+    1. Someone complains to the agency
+    1. Agency emails developers
+    1. Developers register a defect
+    1. Devlopers fix it within a week or two, or whenever convenient
+--
+- Sometimes catalog goes down completely, then:
+    1. Either agency, or someone external notices
+    1. Agency calls developers
+    1. Developers restart the catalog within an hour or so
+
+---
+## Identity provider
+
+<img src="11-idp.png">
+
+---
+## Identity provider: Operations
+
+- Login functionality is very important
+
+--
+- 99.99% or better uptime required
+
+--
+- Agency expects problems to be fixed before they become aware
+
+--
+- Ad-hoc operations not an option
+
+---
+## Main differences
+
+- System criticality
+    - In how much trouble are we in if it does not work?
+--
+- System availability
+    - "Most of the time" vs. 99.99%
+    - SLAs
+
+---
+## Availability
+
+- Understood from a user's point of view
+
+--
+- Requirements
+    - Formal or informal
+    - [Percentages translated to time](https://en.wikipedia.org/wiki/High_availability#Percentage_calculation)
+--
+- Is the system *available* right now?
+
+--
+- Let's say a system is
+    - Not responding at all
+--
+    - Not responding for 10% of users
+--
+    - 1% of operations fail
+--
+    - Some operations take much longer than expected
+--
+    - One non-critical function does not work
+
+---
+## High availability
+
+- The higher the availability, the harder it is to achieve
+    - Going from 98% to 99% is fairly easy
+    - Going from 99.99% to 99.999% is much harder
+--
+- Achieved through
+    - No single point of failure (redundancy)
+--
+    - Reliable crossover (switching)
+--
+    - Failure detection (monitoring)
+--
+- More on this: [Site reliability engineering](https://landing.google.com/sre/books/)
+
+---
+## Roles within an organization
+
+- Support
+    - Answer user questions, help troubleshoot
+--
+    - Verify and triage incoming problem reports
+--
+- Operations
+    - Monitor if system is running in an acceptable way
+--
+    - Troubleshoot verified problem reports
+--
+    - Maintain operating environments
+--
+- Development
+    - Troubleshoot verified problem reports
+--
+    - Fix defects, prevent performance degradation
+--
+    - Add new features
+--
+    - Adapt to new environments, products and standards
+
+---
+## Maintenance lifecycle phase
+
+- Commonly perceived as fixing defects only
+
+--
+- Includes all of the areas mentioned before (and more)
+
+--
+- The most expensive part (around 60-80% TCO)
+
+--
+- Out of this, ~80% is due to enhancements, not fixes
+
+---
+## Legacy software
+
+- Is useful and successful software
+--
+ that over time became a victim of its own success
+
+--
+- "A system without tests" - Michael Feathers
+
+--
+- Nobody knows in full what the system does or how it works
+    - Change impact is difficult to estimate
+    - Regression testing is complicated
+--
+- This forces to optimize for risk reduction, rather than overall complexity
+    - Suboptimal designs add accidental complexity
+--
+- Complexity accumulates
+    - Narrowing design space
+    - Making comprehension harder
+
+---
+## Technical debt
+
+- A metaphor for explaining *accidental complexity* / *cruft*
+
+--
+    - Very useful for explaining things to non-technical people
+--
+- Adding *technical debt* it is unavoidable
+
+--
+- If we do nothing, maintainance will get increasingly complicated
+
+---
+## Impact of technical debt
+<img src="11-cruft-impact.png" width="130%">
+
+.footnote[
+<cite>Source: [Is High Quality Software Worth the Cost?](https://martinfowler.com/articles/is-quality-worth-cost.html)</cite>
+]
+
+---
+## Things that help maintenance
+
+- Adding automated regression tests
+
+--
+- Removing features
+
+--
+- Refactoring
+    - Applying a series of small transformations to code
+    - In order to improve quality without changing function
+--
+- Creating documentation
+
+--
+
+All of the above take *time* and *effort*
+
+---
+## What to do with legacy systems?
+
+- Maintain *status quo* - run with minimal changes
+
+--
+- Modernize incrementally while adding new features
+
+--
+- Build a new facade and reuse existing components
+
+--
+- Throw it away and replace with a new system
+
+--
+
+Ultimately a joint business and IT decision
+
+---
+## Key takeaways
+
+- Different systems have different operational requirements
+
+--
+- What is high availability and how to achieve it
+
+--
+- Maintenance is vital to the long-term success of a system
+
+--
+- What impact does technical debt have and how to reduce it
+
+---
+## Reading assignment
+
+Mandatory:
+
+- Article: [Is High Quality Software Worth the Cost? by Martin Fowler](https://martinfowler.com/articles/is-quality-worth-cost.html)
+- Wiki-like entry: [Technical Debt by Martin Fowler](https://martinfowler.com/bliki/TechnicalDebt.html)
+
+Recommended:
+
+- 40 min hands-on refactoring talk: [Succession by Katrina Owen](https://www.youtube.com/watch?v=59YClXmkCVM)
+- Book: [Site Reliability Engineering](https://landing.google.com/sre/books/)
+- Book: [Refactoring: Improving the Design of Existing Code](https://martinfowler.com/books/refactoring.html)
+
+---
+class: middle, center
+# Questions?
+
+---
+## Next time
+
+One of these:
+- Guest lecture by an invited speaker
+- Starting your career in IT
+
+		</textarea>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/remark/0.14.0/remark.min.js"></script>
+		<script>
+			var slideshow = remark.create({
+                highlightLanguage: 'java',
+                highlightStyle: 'github',
+                highlightLines: 'true',
+                highlightSpans: 'true',
+				countIncrementalSlides: false
+            });
+		</script>
+		<script></script>
+	</body>
+</html>

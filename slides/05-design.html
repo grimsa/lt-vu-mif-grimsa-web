@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style>
+			body {
+	font-family: "Palatino Linotype", Palatino, Arial, sans-serif;
+}
+h1, h2, h3 {
+	font-weight: 400;
+	margin-bottom: 0;
+}
+.remark-slide-content h1 { font-size: 3em; }
+.remark-slide-content h2 { font-size: 2.4em; }
+.remark-slide-content h3 { font-size: 1.8em; }
+.remark-slide-content p { font-size: 1.4em; text-align: justify; }
+.remark-slide-content ul > li, .remark-slide-content ol > li {
+    font-size: 1.2em; 
+    margin-top: 0.6em;
+    text-align: justify;
+    line-height: 1.25em;
+}
+.remark-slide-content li li { font-size: 1em; }
+.remark-slide-content li ul, .remark-slide-content li ol { margin-top: 0.6em; }
+.footnote {
+	position: absolute;
+	bottom: 3em;
+}
+.red { color: #fa0000; }
+.large { font-size: 2em; }
+a, a > code {
+	text-decoration: none;
+}
+.remark-slide-content code {
+  background: none repeat scroll 0 0 #F8F8FF;
+  border: 1px solid #DEDEDE;
+  border-radius: 3px 	;
+  padding: 0 0.2em;
+  line-height: normal;
+}
+.remark-code, .remark-inline-code { font-family: "Bitstream Vera Sans Mono", "Courier", monospace; }
+.remark-code-line-highlighted, .remark-code-span-highlighted { background-color: #F8EEC7; } /* B0CDE7 */
+.pull-left {
+	float: left;
+	width: 47%;
+}
+.pull-right {
+	float: right;
+	width: 47%;
+}
+.pull-right ~ p {
+	clear: both;
+}
+#slideshow .slide .content code {
+	font-size: 0.8em;
+}
+#slideshow .slide .content pre code {
+	font-size: 0.9em;
+	padding: 15px;
+}
+.main-title, .title {
+	background: #272822;
+	color: #777872;
+	text-shadow: 0 0 20px #333;
+}
+.main-title p {
+    text-align: center;
+}
+.title h1, .title h2, .main-title h1, .main-title h2 {
+	color: #f3f3f3;
+	line-height: 0.8em;
+}
+/* Custom */
+.remark-code {
+	display: block;
+	padding: 0.5em;
+    font-size: 20px;
+}
+img {
+    display: block;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+    vertical-align: middle;
+}
+blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin-left: 1.5em;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+}
+blockquote p {
+  display: inline;
+}
+table {
+    border-collapse: collapse;
+    margin-top: 1.5em
+}
+table td, table th {
+    vertical-align: top;
+    border: 1px solid #AAAAAA;
+    padding: 5px 5px;
+}
+
+		</style>
+	</head>
+	<body>
+		<!--
+			 - Remark Wiki: https://github.com/gnab/remark/wiki
+		 -->
+		<textarea id="source">
+class: center, middle, main-title
+
+# Software Design and Architecture
+Part 1
+
+---
+## Today
+
+- Content
+	- Basic understanding about modelling and design
+	- System context diagram
+	- Use case diagram
+- Questions, ideas, comments
+    - [Sli.do #VUSE1905](https://app.sli.do/event/jhmdu4zl)
+
+---
+## The basic problem: how?
+
+<br>
+
+.center[Requirements]
+
+.center[↓]
+
+.center[????]
+
+.center[↓]
+
+.center[Code]
+
+---
+## It depends
+
+- Small and simple problems
+    - Solved with little attention to design
+
+--
+
+- Big and difficult problems
+    - Design largely determines how complex software can become
+
+---
+## Why is that?
+
+- Code is only limited by what people can imagine
+
+--
+- However, [human mind is very limited](https://javadevguy.wordpress.com/2017/11/02/transcending-the-limitations-of-the-human-mind/)
+
+???
+How big a codebase can one developer know deeply. 100k LoC?
+
+---
+## Models to the rescue
+
+> A model **represents some aspect of reality** or an idea that is of interest.
+> A model is a **simplification**.
+> It is an interpretation of reality that **abstracts** the aspects
+> relevant to solving the problem at hand and **ignores extraneous detail**.
+> <br><br>— <cite>Eric Evans, [Domain-Driven Design](https://www.goodreads.com/book/show/179133.Domain_Driven_Design), 2003</cite>
+
+---
+## Model of average life expectancy
+
+![Default-aligned image](05-map.png)
+
+---
+## More on models
+- A model is merely a human construct to help us better understand the real world
+
+--
+- We can model what was, what is, and **what could be**
+
+???
+- Models Software design is mostly about choosing a good model for the software
+
+---
+## Design
+
+> 1. [**process**] to define the architecture, system elements, interfaces, and other characteristics of a system or system element.
+> 2. **Result** of the process in (1).
+> <br><br>— <cite>Systems and software engineering - Vocabulary, ISO 24765:2017</cite>
+
+---
+## More on design
+
+- Design is about defining (modelling) a system or system element in order to:
+    - achieve the goals
+    - satisfy constraints
+    - ensure other desired qualities
+
+--
+
+- Design can be done at different levels
+    - With different goals
+
+--
+
+- There are always multiple alternative viable designs
+
+--
+- The goal is to choose the best one
+    - Analogy with planning - selecting the best possible future
+
+---
+## What does design help with?
+
+- Mitigating risks
+
+--
+- Communicating, discussing, and validating ideas
+
+--
+- Decomposing and delegating work
+
+--
+- Construction
+
+---
+## Another term: Architecture
+
+> A software architecture is a **description** of the **subsystems** and **components**
+> of a software system and the **relationships** between them.
+> <br>[…]<br>
+> The software architecture of a system is an artifact that results from the software **design** activities.
+> <br><br> — <cite>[Pattern-Oriented Software Architecture](https://www.goodreads.com/book/show/85039.Pattern_Oriented_Software_Architecture_Volume_1), 1996</cite>
+
+--
+
+Essentially a set of **components** and **connectors** at a software system level; a blueprint for a software system.
+
+---
+## How to communicate design?
+
+- In a free form
+    - Diagrams and drawings
+    - Text
+	- Tables
+
+--
+- Using standard notation
+	- [Unified Modelling Language (UML)](https://en.wikipedia.org/wiki/Unified_Modeling_Language)
+	- [The C4 model](https://c4model.com/)
+
+---
+## So where to start?
+
+Always start with the problem.
+
+> **Without requirements** that your solution must fulfill, all **design** work […] **is just guessing** at best.
+> <br><br> — <cite>Frank Buschmann, [SE Radio podcast E54](https://www.se-radio.net/2007/04/episode-54-interview-frank-buschmann/)</cite>
+
+--
+
+So let's look at the software system as a whole.
+
+---
+## System context diagram
+
+<img src="05-context-diagram.jpg" width="95%">
+
+---
+## Use case diagram
+
+<img src="05-use-case-diagram.png" width="70%">
+
+---
+## Some attributes of these diagrams
+
+| System context | Use case |
+| ---------------| -------- |
+| Big picture of the system landscape | Actor interactions with the system |
+| Free-form or C4 model     | UML standard |
+| System as a single element | System as a boundary with use cases within |
+| Works well for documenting existing systems | Works well for visualizing requirements |
+
+---
+## Key takeaways
+
+- What are models
+
+--
+- What is design (both as an activity and as a thing) and why do we need it
+
+--
+- Ways of documenting software systems at the highest level
+
+---
+## Reading assignment
+
+Mandatory:
+
+- [Blog post: Transcending limitations of the human mind](https://javadevguy.wordpress.com/2017/11/02/transcending-the-limitations-of-the-human-mind/)
+
+Recommended:
+
+- [Talk: Pragmatic architecture](https://www.youtube.com/watch?v=jNgZtM6SQmE)
+
+---
+class: middle, center
+# Questions?
+
+---
+## Next time
+
+- More about design
+	- How to identify and communicate main elements of a software system
+	- How do we tell a good design from a bad one?
+	- What design principles should we follow?
+	- Etc.
+
+		</textarea>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/remark/0.14.0/remark.min.js"></script>
+		<script>
+			var slideshow = remark.create({
+                highlightStyle: 'github',
+                highlightLines: 'true',
+                highlightSpans: 'true',
+				countIncrementalSlides: false
+            });
+		</script>
+		<script></script>
+	</body>
+</html>

@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style>
+			body {
+	font-family: "Palatino Linotype", Palatino, Arial, sans-serif;
+}
+h1, h2, h3 {
+	font-weight: 400;
+	margin-bottom: 0;
+}
+.remark-slide-content h1 { font-size: 3em; }
+.remark-slide-content h2 { font-size: 2.4em; }
+.remark-slide-content h3 { font-size: 1.8em; }
+.remark-slide-content p { font-size: 1.4em; text-align: justify; }
+.remark-slide-content ul > li, .remark-slide-content ol > li {
+    font-size: 1.2em; 
+    margin-top: 0.6em;
+    text-align: justify;
+    line-height: 1.25em;
+}
+.remark-slide-content li li { font-size: 1em; }
+.remark-slide-content li ul, .remark-slide-content li ol { margin-top: 0.6em; }
+.footnote {
+	position: absolute;
+	bottom: 3em;
+}
+.red { color: #fa0000; }
+.large { font-size: 2em; }
+a, a > code {
+	text-decoration: none;
+}
+.remark-slide-content code {
+  background: none repeat scroll 0 0 #F8F8FF;
+  border: 1px solid #DEDEDE;
+  border-radius: 3px 	;
+  padding: 0 0.2em;
+  line-height: normal;
+}
+.remark-code, .remark-inline-code { font-family: "Bitstream Vera Sans Mono", "Courier", monospace; }
+.remark-code-line-highlighted, .remark-code-span-highlighted { background-color: #F8EEC7; } /* B0CDE7 */
+.pull-left {
+	float: left;
+	width: 47%;
+}
+.pull-right {
+	float: right;
+	width: 47%;
+}
+.pull-right ~ p {
+	clear: both;
+}
+#slideshow .slide .content code {
+	font-size: 0.8em;
+}
+#slideshow .slide .content pre code {
+	font-size: 0.9em;
+	padding: 15px;
+}
+.main-title, .title {
+	background: #272822;
+	color: #777872;
+	text-shadow: 0 0 20px #333;
+}
+.main-title p {
+    text-align: center;
+}
+.title h1, .title h2, .main-title h1, .main-title h2 {
+	color: #f3f3f3;
+	line-height: 0.8em;
+}
+/* Custom */
+.remark-code {
+	display: block;
+	padding: 0.5em;
+    font-size: 20px;
+}
+img {
+    display: block;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+    vertical-align: middle;
+}
+blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin-left: 1.5em;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+}
+blockquote p {
+  display: inline;
+}
+table {
+    border-collapse: collapse;
+    margin-top: 1.5em
+}
+table td, table th {
+    vertical-align: top;
+    border: 1px solid #AAAAAA;
+    padding: 5px 5px;
+}
+
+		</style>
+	</head>
+	<body>
+		<!--
+			 - Remark Wiki: https://github.com/gnab/remark/wiki
+		 -->
+		<textarea id="source">
+class: center, middle, main-title
+
+
+
+
+## Configuration management
+
+- 
+
+What is config management?
+
+Examples of config files.
+
+Questions:
+- What version is currently deployed? More important/difficult than it seems.
+- What did we change recently? Prod support to identify bugs.
+- What is using dependency version X-Y
+
+- Covers hardware, firmware, software
+
+- The more tools, the worse.
+- One tool -> drives versioning of everything in Git
+    - Jenkinsfile
+
+- Identify what has to be controlled
+    - Not only code, CI can include binaries, hardware, training material, user guides, etc.
+
+Tracability is very important
+
+- The less you controll, the easier (assuming what you don't control is stable)
+
+Requesting, evaluating and approving software changes
+Change Advisory Board (CAB)
+Change freezes
+
+Releases
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Software Testing
+
+---
+## Today
+
+- Course organization
+    - Virgilijus is on paternity leave
+    - Feedback
+- Content
+    - Can we write software without defects?
+    - If not, could we find them in an automated way?
+- Questions, ideas, comments
+    - [Sli.do #VUSE1909](https://app.sli.do/event/vpgfoqwj)
+
+---
+## Course organization
+
+- Virgilijus is on paternity leave
+- Project work continues with me
+
+---
+## Feedback form
+
+- Thank you for participating
+- Results
+TODO
+
+---
+## Quality assurance
+
+- Everything we do to ensure proper quality
+
+--
+    - Quality = fit for purpose and satisfies expectations
+--
+- Covers both
+    - Prevention of defects
+    - Detection and correction of defects
+--
+- Some examples
+    - Adhering to standards and proven processes
+    - Reviewing various artifacts
+    - Using formal methods
+    - Testing
+--
+- **Testing** is the primary vehicle for quality assurance
+
+---
+## Software testing
+
+- Everyone who develops software does testing
+
+--
+- Testing is *running* the program with *selected inputs* and checking that *actual* results match *expectations*
+
+--
+- We can do it *at random* or *systematically*
+
+---
+## Example: Print constant text
+
+```
+class MyProgram {
+    public static void main() {
+        System.out.println("Hello, world!");
+    }
+}
+```
+
+--
+
+- Always behaves the same way
+- Expected output: constant `Hello, world!`
+
+--
+
+Testing is trivial
+
+---
+## Example: Twice the number
+
+`<T extends Number> T twice(T number)`
+
+--
+- `T` is `Byte`
+   - Inputs [-128; 127]
+   - 256 different input values
+
+--
+- `T` is `Long`
+   - Inputs [–9,223,372,036,854,775,808; 9,223,372,036,854,775,807]
+   - 1.8E19 different input values
+
+--
+- `T` is `BigInteger`
+   - Input space: (loosely) infinite
+
+--
+
+Testing with all inputs is not **possible** or **feasible**
+
+---
+## Input selection
+
+- How do we choose which inputs to test with?
+--
+ (*test cases*)
+    - *Test case* = particular choice of input data + expected outcome
+--
+- Random selection is not efficient
+
+--
+- Fundamental idea
+    - Correct results for tested inputs should be representative of correct results for untested inputs
+--
+- There are heuristics that help us choose (*test case design*)
+
+--
+    - Equivalence groups (black-box)
+    - Boundaries (black-box)
+    - Control flow (white-box)
+    - States (white-box)
+---
+## Equivalence groups
+
+Test cases for `int sqare(int number)`?
+
+--
+
+Idea
+- A fault in code often affects a whole group of similar inputs
+- It's unlikely that values within the same group of similar inputs produce different results
+
+--
+
+Therefore
+1. Partition input space into logical equivalence groups
+2. Choose input values from each group
+
+---
+## Boundary conditions
+
+Test cases for `int sqare(int number)`?
+
+--
+
+Idea
+- Faults are more likely at the boundaries of equivalence groups
+    - E.g. confusion between `>` and `>=`, and other *off-by-one errors*
+
+--
+
+Therefore
+- Choose input values at the boundaries
+- Choose "special" values (`null`, `0`, min/max values, etc.)
+
+---
+## Control flow
+
+```
+public static int foo(int a, int b) {
+    int result = 5;
+    if (a > 15) {
+        result = a;
+    }
+    return b > 10
+       ? result + b
+       : result - b; 
+}
+```
+
+--
+
+Idea
+- A piece of code has a finite number of different paths through it
+
+--
+
+Therefore
+- Choose inputs that exercise every path
+
+---
+## More examples
+
+- `Set<Polygon> splitIntoEqualAreas(Polygon p)`
+
+--
+- `List<Route> route(Point from, Point to)`
+
+--
+- `List<SearchResult> google(String query, User u)`
+
+--
+- `Img style(Img source, F<Img, Img> transform)`
+
+---
+## In practice
+
+- With testing we cannot prove absence of defects
+
+--
+- Any nontrivial system will not be tested completely
+
+--
+- The more we test
+    - The more *confidence* we have in the quality of the system
+--
+    - The more *time* and *money* we spend
+--
+- Gaol is to discover *important* defects as quickly and cheaply as possible
+
+--
+- Test design is difficult
+
+---
+## Test types
+
+<img src="09-test-levels.png">
+
+---
+## Tests in development
+
+- Let's say we have a number of test cases for our system
+
+--
+- We want to execute test cases after every change
+
+--
+- **Manual testing gets expensive very quickly**
+
+---
+## Test automation
+
+- Idea
+    - Write short programs/scripts that exercise system under test and check if expectations are met
+--
+- Different types of tests can be automated
+    - Unit tests
+    - Integration tests
+    - Acceptance tests
+    - Performance tests
+    - Security tests
+    - Etc.
+--
+- There are tools, libraries and framewroks that facilitate this
+
+---
+## JUnit example
+
+```
+class VatRateTest {
+    @Test
+    void defaultRate_lithuania_correctValue() {
+        VatRate rate = new VatRate("LT");
+
+        BigDecimal actualResult = rate.defaultRate();
+
+        BigDecimal expectedResult = new BigDecimal("0.21");
+        assertEquals(expectedResult, actualResult);
+    }
+
+    // other test cases
+}
+```
+
+--
+- Test "succeeds" (is green) if expectation is met
+
+--
+- Test "fails" (is red) if it expectation is not met
+
+--
+    - Failures are what we want
+
+---
+
+
+
+
+Test "suceeds" if it shows an error
+
+- 
+
+- Test automation
+
+
+
+
+Goal: smallest possible set that would provide sufficient confidence
+
+
+
+
+
+???
+Pratyboms: 
+Practice - writing unit tests
+Best practices - separating given/when/then blocks, naming methods
+Testing `getDefaultVatRate (depends on current time)`
+
+
+
+---
+## Example: VAT calculation
+
+Let's say we have a system that calculates VAT rates
+
+---
+## Example 1
+
+`BigDecimal currentDefaultVatRate()`
+
+--
+
+- Input space: N/A
+- Selected inputs: N/A
+- Expected result: constant `0.21`
+
+--
+
+Probably not worth testing in isolation
+
+---
+## Automated test example
+
+```
+
+```
+
+```
+class VatRateTest {
+    @Test
+    void currentDefaultVatRate_always_correctValue() {
+        BigDecimal actualResult = VatRate.currentDefault();
+
+        BigDecimal expectedResult = new BigDecimal("0.21");
+        assertEquals(expectedResult, actualResult);
+    }
+}
+```
+
+---
+## Example 2
+
+`BigDecimal amountWithVat(BigDecimal amount)`
+
+- Input space: 
+- Selected inputs:
+- Expected results:
+
+
+
+
+Function: `String readDefaultSettingsFile()`
+
+
+
+- Input space
+--
+    - File does not exist
+    - Empty file exists
+    - File exists, but no permissions
+    - Hardware IO error
+    - ...
+---
+
+## Example 2
+
+
+
+
+Space of possible inputs
+    - Easy for linear problems
+    - What about Machine learning?
+
+Time and resource constraints -> can't cover all
+
+Coverage - how much space we cover
+
+Issue: how to identify a set of "highest priority" tests?
+
+---
+
+
+
+---
+## Key takeaways
+
+- Code is written for humans
+
+--
+- Code should be optimized for readability
+
+--
+- Code is not the only artifact being produced in construction phase
+
+--
+- Code reviews are probably the most important practice to have in your team
+
+--
+- Many tools are available - use them to your benefit
+
+---
+class: middle, center
+# Questions?
+
+---
+## Next time
+
+- Discuss your feedback ([Form to submit it](https://forms.gle/4EAzS9anen8nYNSa7))
+- Software testing
+    - Can we write software without defects?
+    - If not, could we find them in an automated way?
+
+		</textarea>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/remark/0.14.0/remark.min.js"></script>
+		<script>
+			var slideshow = remark.create({
+                highlightLanguage: 'java',
+                highlightStyle: 'github',
+                highlightLines: 'true',
+                highlightSpans: 'true',
+				countIncrementalSlides: false
+            });
+		</script>
+		<script></script>
+	</body>
+</html>
