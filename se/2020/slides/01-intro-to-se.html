@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" href="slides-style.css" type="text/css">
+		<style>
+.semi-transparent {
+  opacity: 0.5
+}
+		</style>
+	</head>
+	<body>
+		<textarea id="source">
+class: center, middle, main-title
+
+# Software Engineering
+Definition and Introduction
+
+---
+## Today
+
+- Overview of software engineering and why we study it
+
+---
+## Some alternative definitions
+
+> Multi-person construction of multi-version software.
+> <br><br>— <cite>David Parnas</cite>
+
+---
+## Some alternative definitions
+
+> The construction of useful IT systems, by teams of people, with limited resources.
+> <br><br>— <cite>John Nicholls</cite>
+
+???
+Note: "Limited resources"
+
+---
+## Some alternative definitions
+
+> The application of a systematic, disciplined, quantifiable approach to the development, operation, and maintenance of software.
+> <br><br>— <cite>IEEE</cite>
+
+???
+Note: Systematic and quantifiable
+
+---
+## First definition
+
+1968 and 1969 - [NATO Software Engineering Conferences](http://homepages.cs.ncl.ac.uk/brian.randell/NATO/Introduction.html)
+???
+Note: 51 years ago
+
+The motivation for these conferences was that the computer industry at large was having a great deal of trouble in producing large and complex software systems.
+--
+> Software engineering is the establishment and use of sound engineering principles in order to obtain economically,
+> software that is reliable, maintainable and works efficiently on real machines.
+>
+> <br><br>— <cite>Software Engineering: A Report on a Conference Sponsored by the NATO Science Committee, NATO, 1969</cite>
+
+???
+----
+
+The conferences played a major role in gaining general acceptance for the term software engineering.
+
+Demo: Link and conference reports
+
+Conferences:
+- https://www.buildstuff.events/
+- https://devdays.lt/
+
+---
+## Background
+
+> The phrase ‘software engineering’ was **deliberately chosen as being provocative**,
+> in implying the need for software manufacture to be based on the types of theoretical foundations
+> and practical disciplines, that are traditional in the established branches of engineering.
+>
+> <br><br>— <cite>Software Engineering: A Report on a Conference Sponsored by the NATO Science Committee, NATO, 1969</cite>
+
+---
+## Why provocative?
+
+Let's look at the definition again:
+
+> Software engineering is the establishment and use of sound engineering principles in order to obtain
+> **economically**, software that is **reliable**, **maintainable** and **works efficiently** on real machines.
+
+--
+Notice some hints of software problems of that time:
+- Expensive
+- Unreliable
+- Unmaintainable
+- Slow/Inefficient
+
+---
+## "The Software Crisis"
+
+- The same conference coins the term "The Software Crisis"
+--
+- Concerns raised:
+   - Problems producing systems on schedule and to specification
+--
+   - Gap between promises to users and performance achieved
+--
+   - Seemingly unavoidable fallibility of large software
+--
+   - More examples of bad large systems than good   
+--
+   - Demands in the industry going ahead faster than our progress
+
+---
+## Dijkstra on software crisis
+
+> The major cause of the software crisis is that the machines have become several orders of magnitude more powerful!
+> To put it quite bluntly: as long as there were no machines, programming was no problem at all;
+> when we had a few weak computers, programming became a mild problem, and now we have gigantic computers,
+> programming has become an equally gigantic problem.
+>
+> <br><br>— <cite>Edsger Dijkstra, The Humble Programmer (EWD340), Communications of the ACM</cite>
+
+---
+## The world of today
+
+- Hardware and resources are efficient, readily available, and cheap
+--
+- Software is critical to society
+--
+- Demand for software and expectations for it are ever growing
+--
+- SE is still a young branch of engineering
+
+---
+## At the same time
+
+- Software is extremely expensive
+--
+- Most projects are delivered over time, over budget or below functionality
+--
+- Software is often of low quality
+
+--
+Basically
+- We are still unable to produce or maintain high-quality software at reasonable price and on schedule
+
+---
+<img src="../../assets/01-project-cartoon.jpg" width="90%">
+
+<div style="font-size: medium; text-align: center">Copyright © www.projectcartoon.com under the Creative Commons Attribution 3.0 Unported License</div>
+
+???
+- Variations of this cartoon have circulated in offices since the 1960’s or 1970’s and were also called the “Tree Swing Picture”.
+
+- It is very useful as a reminder of what not to do. 
+
+Sources:
+- https://www.smart-jokes.org/how-it-projects-really-work.html
+- https://medium.com/@thx2001r/the-project-cartoon-root-cause-5e82e404ec8a
+
+---
+## Why is it hard?
+
+- There is no single "right way" to engineer software systems
+	- The combination of constraints within a project is probably unique
+--
+	- Remember: [There is no "best practice"](https://www.satisfice.com/blog/archives/5164)
+--
+- Scale
+	- Both systems and organizations producing them are larger
+	- Systems rarely exist in isolation
+???
+Example:
+- SolarDesignTool: 3-5 developers over 10-12 years
+	- https://get.solardesigntool.com/wp-content/uploads/2016/05/builder-1.png
+	- https://get.solardesigntool.com/wp-content/uploads/2016/05/builder-3.png
+- LyraSolar: 2 teams in a company in South America, a distributed core team of 4-5 backend developers, some freelancers
+	- https://gatsby-lyra.imgix.net/https%3A%2F%2Fgatsby-lyra.cdn.prismic.io%2Fgatsby-lyra%2F00e23413e10978b87f79aefc0c121ead93d968ea_softlaunch-collage.png?auto=compress%2Cformat&fit=max&crop=faces%2Cedges%2Centropy&w=1061&h=1008&ixlib=js-2.0.0&s=f4c75b222800773c4fc2c38fa891250d
+	- https://lyrasolar.com/splash
+
+--
+- Communication
+	- Distributed
+	- Lack of well-understood representations of software
+???
+----
+Note: Lack of well-understood representations of software
+--
+- The rate of change in the business is higher
+
+---
+## Why study software engineering?
+
+- Software is critical to society
+???
+Note: Both meaning and money (making a living).
+--
+- The current state of affairs *can* and *should* be improved
+--
+- Building large software systems is difficult
+	- Yet rewarding
+	- But doing it without discipline is madness
+???
+Note: SE protects you mental health
+---
+## Aspects of software engineering
+
+- Requirements reflecting the real customer needs
+--
+- Suitable design
+--
+- Effective and predictable construction
+--
+- Reliable quality assurance
+--
+- Safe deployment
+--
+- Cost-effective maintenance
+--
+- Organized and predictable project execution
+
+--
+In practice SE is mostly about processes, methodologies, and tooling.
+
+---
+## Ties to many other fields
+
+- computer science <span class="semi-transparent">(algorithms, data structures, languages, tools)</span>
+--
+- management <span class="semi-transparent">(project management, scheduling, estimating)</span>
+--
+- economics/marketing <span class="semi-transparent">(prioritizing investments, pricing)</span>
+--
+- communication <span class="semi-transparent">(organizational structure, stakeholders)</span>
+--
+- law <span class="semi-transparent">(compliance, patents, licenses, copyrights)</span>
+--
+- psychology <span class="semi-transparent">(productivity, personalalities, usability, what is fun)</span>
+--
+- sociology <span class="semi-transparent">(localization, diversity)</span>
+--
+- art <span class="semi-transparent">(user interface design)</span>
+--
+- ethics <span class="semi-transparent">(AI, profiling, use of personal data, public safety)</span>
+--
+- ...
+
+---
+## Key takeaways
+
+- SE is about teams building and evolving high-quality software, while working under constraints unique to their circumstance.
+--
+- There is no single "right way" to engineer software systems
+--
+- SE is a "softer" discipline compared to CS
+
+---
+## Reading assignment
+
+Recommended:
+- [Software Engineering: A Report on a Conference Sponsored by the NATO Science Committee, NATO, 1969](http://homepages.cs.ncl.ac.uk/brian.randell/NATO/nato1968.PDF)
+	- 1. Background of Conference
+	- 7.1. Software: The State of the Art
+	- 7.2. Education
+
+---
+class: middle, center
+# Questions?
+
+---
+## Next
+
+- Things to get you started on your projects
+	- System documentation / description
+	- Version control systems
+	- Prototyping
+	- Software Requirements
+		</textarea>
+		<script src="https://remarkjs.com/downloads/remark-0.15.0.min.js"></script>
+		<script>
+			var slideshow = remark.create({
+                highlightStyle: 'github',
+                highlightLines: 'true',
+				highlightSpans: 'true',
+				ratio: '16:9'
+            });
+		</script>
+	</body>
+</html>
