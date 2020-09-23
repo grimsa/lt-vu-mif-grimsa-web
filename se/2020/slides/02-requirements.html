@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" href="slides-style.css" type="text/css">
+		<style>
+.semi-transparent {
+  opacity: 0.5
+}
+		</style>
+	</head>
+	<body>
+		<textarea id="source">
+class: center, middle, main-title
+
+# Software Engineering
+Documentation, requirements, prototypes
+
+???
+Project idea: Integrations between systems
+---
+## Now
+
+- System documentation
+- Requirements
+- Prototypes
+
+---
+class: middle, center
+## Documentation
+
+---
+## Traits of good documentation
+
+- Creates value for the reader
+    - Saves time
+    - Empowers
+--
+- Is complete enough to stand on its own
+--
+- Is distilled to the essence
+    - Protects against frequent changes
+--
+- Is professional
+    - Correct use of terminology
+    - Grammar
+    - Consistent formatting
+--
+- ...
+
+???
+Student-provided flaws of written communication:
+- Does not use unclear terms/abbreviations
+- Omits valuable context
+- Grammar / logic errors
+
+---
+## Why do we need documentation?
+
+- Build common understanding
+--
+- Use for reference
+--
+- Preserve knowledge through staff changes
+
+???
+- The Utopia of Rules:
+> Everyone’s first impulse was just to say, “Well, sure, we’ll just write that for the authorities and proceed as we always have.”
+> But in practice this quickly becomes impossible, because the moment any conflicts crop up, both parties will automatically appeal to the rule-book.
+
+Wording of requirements is a good example of this.
+
+For the group project:
+- complete enough, distilled, professional
+- build your common understanding of what you will be building, then use as a reference
+
+---
+## Some examples
+
+- Sales pitch / early-stage docs
+      - [Mysterium Network](https://mysterium.network/whitepaper.pdf)
+      - [Monetha](https://www.monetha.io/Monetha_WP.pdf)
+      - [Crypto.com](https://crypto.com/images/crypto_com_whitepaper.pdf)
+???
+ICO - some context. Critical thinking.
+
+You may have the best idea, but it does not matter if you can not communicate it, argue for it, and convince people.
+
+Virgilijus will show some project examples.
+--
+- Request for quotation (RFQ)
+      - (Demo)
+???
+- VIISP RFQ docs https://cvpp.eviesiejipirkimai.lt/Notice/DocumentsFamily/2020-654142
+    - Value: 1.6 M EUR
+    - Requiements: 288 pages
+
+--
+- Internal product documentation
+      - (Demo)
+???
+Demo:
+- https://solardesigntool.atlassian.net/wiki/spaces/SDT/pages/61800449/High-Level+Overview+WIP
+- https://solardesigntool.atlassian.net/wiki/spaces/SDT/pages/62259343/F01+Create+Minimal+Sales+Design+Flow
+- https://solardesigntool.atlassian.net/wiki/spaces/SDT/pages/20086786/Domain+Architecture
+- https://solardesigntool.atlassian.net/wiki/spaces/SDT/pages/83787777/High-level+API+Design+Document
+- https://solardesigntool.atlassian.net/wiki/spaces/SDT/pages/27099139/Authority+Having+Jurisdiction+Service
+
+- Javadoc com.solardesigntool.design.pvsystemdesign.design.system.DcVoltageLosses
+--
+- External product documentation
+      - [GitHub API docs](https://docs.github.com/en)      
+
+---
+class: middle, center
+## Requirements analysis and specification
+
+---
+## Some questions
+
+- What are software requirements?
+--
+- Why do we need them?
+--
+- What is requirements analysis?
+--
+- How do we document requirements?
+
+---
+## Software requirement
+
+> 1. Software capability **needed by a user** to solve a problem or to achieve an objective.
+> 2. Software capability that **must be met** or posessed by a system or system component
+> **to statisfy a** contract, standard, specification, or other **formally imposed document**.
+> <br><br>— <cite>Systems and software engineering - Vocabulary, ISO 24765:2017</cite>
+
+---
+## Software requirement
+
+> Requirements provide the **stakeholders’ view** of what they **expect** the software
+system to provide. They indicate **what** the software system must do, but do **not**
+explicitly express **how** it must be done.
+> <br><br>— <cite>The Essentials of Modern Software Engineering, ACM Books, 2019</cite>
+
+---
+## Types of requirements
+
+- Functional <span class="semi-transparent">- what should software do?</span>
+	- Behaviour between inputs and outputs
+--
+- Non-functional <span class="semi-transparent">- what should software be like?</span>
+	- Also known as *quality attributes*
+    - Qualities observable during operation
+	- Qualities embodied in the static structure
+	- [Some example categories](https://en.wikipedia.org/wiki/Non-functional_requirement#Examples)
+
+---
+## Why do we need requirements?
+
+- Customers <span class="semi-transparent">- agreement on scope</span>
+--
+- Managers <span class="semi-transparent">- planning and control</span>
+--
+- Designers <span class="semi-transparent">- primary input for design</span>
+--
+- Programmers <span class="semi-transparent">- implementing the right thing</span>
+--
+- Testers <span class="semi-transparent">- quality assurance</span>
+
+---
+## Requirements analysis
+
+- An essential activity in any software project
+	- The single most important task in a large software project
+--
+- Covers
+  - Eliciting (gathering, discovering) requirements
+--
+  - Analyzing (refining, improving) requirements
+--
+	- Recording (documenting) requirements
+
+---
+## Eliciting requirements
+
+- Not just simply asking
+--
+- Iterative dialog between end-users and analysts
+--
+- [Many tools and techniques](https://www.bridging-the-gap.com/elicitation-techniques-business-analysts/)
+--
+- Learn how users work
+	- Talk to them
+	- Work with them
+	- Read process descriptions, manuals, etc.
+--
+- Ask questions to "dig" for requirements
+--
+- Use sketches or prototypes
+--
+- Think about why users do something, not just what
+
+---
+## Analyzing requirements
+
+- Ensure [quality of requirements](https://www.guru99.com/learn-software-requirements-analysis-with-case-study.html#3)
+	- correct (functionally)
+--
+	- complete (no holes)
+--
+	- feasible (technically, legally)
+--
+	- verifiable (yes/no)
+--
+	- sufficiently detailed
+--
+	- prioritized
+--
+- Understand technical implications
+
+---
+## Recording requirements
+
+- Content over form
+	- Content - shared mental model of what has to be done
+	- Form - how it is documented
+--
+- Some forms
+	- Natural language
+--
+  - Structured natural language
+--
+  - Graphical
+--
+  - Formal specification
+--
+  - A mix of the above
+
+---
+## Form: Natural language
+
+> Users of the system should be able to select folders that are to be excluded from backups.
+
+---
+## Form: Structured natural language
+
+User story:
+
+> **As a** user,
+> **I can** indicate folders not to backup
+> **so that** my backup drive isn't filled up with things I don't need saved.
+
+--
+
+Acceptance test:
+
+> **Given** a list of folders to exclude,
+> **when** backup is performed,
+> **then** backup does not contain excluded folders.
+
+---
+## Form: Structured natural language
+
+Use case (casual template):
+
+- **Title:** Exclude folders from backup
+- **Primary actor:** User
+- **Scenario**:
+    1. User specifies folders to be excluded from backup
+	2. User saves their preferences
+	3. When backup is performed, specified folders are not included
+
+---
+## Form: Graphical
+
+![Default-aligned image](../../assets/04-state-diagram.svg)
+
+???
+Public domain image: https://commons.wikimedia.org/wiki/File:Turnstile_state_machine_colored.svg
+
+--
+- Free-form drawing, diagram, or prototype
+- Standard notation (e.g. UML)
+	- [UML diagrams](https://tallyfy.com/uml-diagram/#use-case-diagram): use case, sequence, activity, state machine
+
+???
+More on prototypes later
+
+---
+## Form: Formal
+
+- Formal specification languages (e.g. Z, OCL)
+
+![Default-aligned image](../../assets/04-formal.png)
+
+???
+Example is in Z.
+Source: https://www.slideserve.com/ranae/logic-specification-and-z-schema
+
+---
+class: middle, center
+## Prototyping
+
+---
+## Prototype
+
+> A prototype is an initial model of an object **built to test a design**. The word comes from a Greek word for “primitive form.”
+ Prototypes are widely used in design and engineering to perfect items and processes before implementing them on a large scale.
+> <br><br>— <cite>UXL Encyclopedia of Science, 3rd ed., UXL, 2015</cite>
+
+???
+Goal - reducing risks
+
+---
+## Types of prototypes
+
+- Throwaway
+    - Rapidly build a prototype
+    - Collect feedback from users
+--
+    - Throw away prototype
+    - Build the system from scratch
+--
+- Evolutionary
+    - Implement some requirements
+    - Collect feedback from users
+--
+    - Implement more requirements
+    - Collect more feedback
+
+???
+Benefit of evolutionary - it is a working (even if limited) product.
+
+---
+## Some examples
+
+- [Paper](https://upload.wikimedia.org/wikipedia/commons/6/67/Paper_prototype_of_website_user_interface%2C_2015-04-16.jpg)
+--
+- Static images
+???
+Demo: Zeplin
+--
+- [Interactive](https://www.fluidui.com/demos/)
+--
+- Stubs
+
+???
+Demo: Stub endpoint, Swagger: https://editor.swagger.io/
+
+---
+## Key takeaways
+
+- A system without any documentation is highly unlikely to be successful
+--
+- Strive to write valuable, distilled, and professional documentation
+--
+- Requirements are user needs and expectations
+--
+- Non-functional requirements are just as important as functional
+--
+- User involvement and shared understanding of what is required is key to success
+--
+- When documenting requirements, focus on content over form
+--
+- Prototyping is a good way to mitigate requirement- and technology-related risks
+
+---
+class: middle, center
+# Questions?
+
+---
+## Next
+
+- Technologies
+- Version control systems
+- Deployment
+
+  </textarea>
+  <script src="https://remarkjs.com/downloads/remark-0.15.0.min.js"></script>
+  <!-- Remark Wiki: https://github.com/gnab/remark/wiki -->
+  <script>
+    var slideshow = remark.create({
+              highlightStyle: 'github',
+              highlightLines: 'true',
+              highlightSpans: true,
+              ratio: '16:9',
+              countIncrementalSlides: false
+          });
+  </script>
+</body>
+</html>
