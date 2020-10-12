@@ -1,0 +1,562 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" href="slides-style.css" type="text/css">
+		<style>
+.semi-transparent {
+  opacity: 0.5
+}
+		</style>
+	</head>
+	<body>
+		<textarea id="source">
+class: center, middle, main-title
+
+# Software Engineering
+Zero-feature release (Part 2)
+
+---
+## Plan
+
+- This lecture
+    - Quality assurance
+    - CI/CD
+--
+- Next 2 lectures
+    - Focus on project plan
+- Shortly after that
+    - The second delivery
+
+---
+class: middle, center
+## Quality assurance
+
+---
+## Quality
+
+- Many [alternative definitions](https://en.wikipedia.org/wiki/Software_quality#Definitions)
+--
+- Basically:
+    - Quality = is fit for purpose and satisfies expectations
+
+---
+## Quality assurance
+
+> To quell a widespread misunderstanding, software quality assurance is **not testing**.
+> Software quality assurance (SQA) is **a set of activities** that define and assess the adequacy of software processes to provide **evidence that establishes confidence**
+> that the software processes are appropriate and produce software products of **suitable quality** for their intended purposes.
+> <br><br>— <cite>SWEBOK 3.0</cite>
+
+--
+- Not (only) testing - everything we do to ensure proper quality
+--
+- The goal is to create evidence proving that software is "good enough"
+
+---
+## Quality assurance
+
+- Covers both
+    - Prevention of defects
+    - Detection and correction of defects
+--
+- Some examples
+    - Adhering to standards and proven processes
+--
+    - Reviewing various artifacts
+--
+    - Using formal methods
+--
+    - Testing
+--
+- **Testing** is the primary vehicle for quality assurance
+
+---
+## Software testing
+
+- Everyone who develops software does testing
+--
+- Testing is *running* the program with *selected inputs* and checking that *actual* results match *expectations*
+--
+- We can do it *at random* or *systematically*
+
+---
+## Example: Print constant text
+
+```
+class MyProgram {
+    public static void main() {
+        System.out.println("Hello, world!");
+    }
+}
+```
+
+--
+- Always behaves the same way
+--
+- Expected output: constant `Hello, world!`
+--
+
+Testing is trivial
+
+---
+## Example: Twice the number
+
+`<T extends Number> T twice(T number)`
+
+--
+- `T` is `Byte`
+   - Inputs [-128; 127]
+   - 256 different input values
+--
+- `T` is `Long`
+   - Inputs [–9,223,372,036,854,775,808; 9,223,372,036,854,775,807]
+   - 1.8E19 different input values
+--
+- `T` is `BigInteger`
+   - Input space: (loosely) infinite
+--
+
+Testing with all inputs is not **possible** or **feasible**
+
+---
+## Input selection
+
+- How do we choose which inputs to test with?
+--
+    - *Test case* = particular choice of input data + expected outcome
+--
+- Random selection is not efficient
+--
+- Fundamental idea
+    - Correct results for tested inputs should be representative of correct results for untested inputs
+--
+- There are heuristics that help us choose (*test case design*)
+--
+    - Equivalence groups (black-box)
+    - Boundaries (black-box)
+    - Control flow (white-box)
+    - States (white-box)
+---
+## Equivalence groups
+
+Test cases for `int sqare(int number)`?
+
+--
+
+Idea
+- A fault in code often affects a whole group of similar inputs
+- It's unlikely that values within the same group of similar inputs produce different results
+
+--
+
+Therefore
+1. Partition input space into logical equivalence groups
+2. Choose input values from each group
+
+---
+## Boundary conditions
+
+Test cases for `int sqare(int number)`?
+
+--
+
+Idea
+- Faults are more likely at the boundaries of equivalence groups
+    - E.g. confusion between `>` and `>=`, and other *off-by-one errors*
+
+--
+
+Therefore
+- Choose input values at the boundaries
+- Choose "special" values (`null`, `0`, min/max values, etc.)
+
+---
+## Control flow
+
+```
+public static int foo(int a, int b) {
+    int result = 5;
+    if (a > 15) {
+        result = a;
+    }
+    return b > 10
+       ? result + b
+       : result - b; 
+}
+```
+
+--
+
+Idea
+- A piece of code has a finite number of different paths through it
+
+--
+
+Therefore
+- Choose inputs that exercise every path
+
+---
+## More examples
+
+- `Set<Polygon> splitIntoEqualAreas(Polygon p)`
+--
+- `List<Route> route(Point from, Point to)`
+--
+- `List<SearchResult> google(String query, User u)`
+--
+- `Img style(Img source, F<Img, Img> transform)`
+
+---
+## In practice
+
+- With testing we cannot prove absence of defects
+--
+- Any nontrivial system will not be tested completely
+--
+- The more we test
+    - The more *confidence* we have in the quality of the system
+--
+    - The more *time* and *money* we spend
+--
+- Goal is to discover *important* defects as quickly and cheaply as possible
+--
+- Test design is difficult
+
+---
+## Tests in development
+
+- Let's say we have a number of test cases for our system
+--
+- We want to execute test cases after every change
+--
+ (*regression testing*)
+--
+- **Manual testing gets expensive very quickly**
+
+---
+## Test automation
+
+- Idea
+    - Write short programs/scripts that exercise system under test and check if expectations are met
+--
+- There are tools, libraries and framewroks that facilitate this
+
+---
+## Example: JUnit
+
+```
+class VatRateTest {
+    @Test
+    void defaultRate_lithuania_correctValue() {
+        VatRate rate = new VatRate("LT");
+
+        BigDecimal actualResult = rate.defaultRate();
+
+        BigDecimal expectedResult = new BigDecimal("0.21");
+        assertEquals(expectedResult, actualResult);
+    }
+
+    // other test cases
+}
+```
+--
+- Test <span style="color: chartreuse">passes</span> if expectation is met
+--
+- Test <span style="color: red">fails</span> if it expectation is not met
+--
+    - Failures are what we want!
+
+---
+## Test levels
+
+- Testing can be performed at [various levels](https://www.test-institute.org/Software_Testing_Levels.php)
+
+???
+- Low-level tests
+    - Are simpler and easier to write, and run faster (we can have more)
+    - Require changes when low-level details change
+    - Provide less confidence
+- High-level tests
+    - Provide more confidence
+    - More stable
+    - More difficult to write and maintain, execute much longer
+
+???
+- Demo: JUnit (utils, controller), Postman
+
+---
+## Key takeaways
+
+- Testing is the primary means of quality assurance
+--
+- Testing a system completely is not realistic
+--
+- Testing can find defects, but not prove absence of them
+--
+- Test cases should be chosen deliberately to maximize coverage and minimize cost
+--
+- Manual testing is very expensive; automation helps make it just expensive
+--
+- Different types of tests exists; most can be automated
+
+---
+## Reading assignment
+
+Mandatory:
+
+- Blog post: [Test Pyramid by Martin Fowler](https://martinfowler.com/bliki/TestPyramid.html)
+- Book chapter: [Test-Driven Development by James Shore](https://www.jamesshore.com/Agile-Book/test_driven_development.html)
+
+---
+class: middle, center
+# CI/CD
+
+---
+## Basic problem
+<br>
+.center[**Source code**]
+
+.center[|]
+.center[*????*]
+.center[↓]
+
+.center[**Software available to end-user**]
+
+--
+<br>
+<br>
+.center[Ideally, instantly and automatically]
+
+---
+## Two main steps
+
+.center[**Source code**]
+
+.center[|]
+.center[*build and package*]
+.center[↓]
+
+.center[**Some binary artifact**]
+
+.center[|]
+.center[*deploy*]
+.center[↓]
+
+.center[**Software available to end-user**]
+
+???
+Last time we talked about build tools. Let's take it further.
+
+---
+class: center, middle
+
+### CI
+
+---
+## Continuous integration (CI)
+
+An almost universally used practice.
+
+--
+- Maintain a code repository
+--
+- Commit to baseline often
+--
+- Build every commit to baseline automatically
+--
+- The build should be fast and self-testing
+--
+- Make everyone aware of the results of the latest build
+--
+- Make the artifacts produced accessible for use, testing and deployment
+
+???
+Minimize "work in progress".
+Tests block integration.
+Fixing a failing build is - top priority.
+
+Demo:
+- https://github.com/SolarDesignTool/equipment-definition-service/pull/174 - failing build
+
+---
+## Build infrastructure
+
+- Build server - dedicated machine
+    - Executes builds, runs tests, performs static code analysis, etc.
+    - Maintains status/history, and notifies developers
+
+???
+Demo: Jenkins
+
+---
+class: center, middle
+
+### CD
+
+---
+## Deployment environment
+
+- An environment where (into which) a software package is deployed
+--
+- This can include
+    - Hardware
+    - Operating system
+    - Any required software
+    - Any required configuration
+---
+
+## Typical environments used
+
+<img src="../../assets/10-envs.svg" style="margin: -50pt 0 -50pt 60pt" width="90%">
+
+--
+- Local/Development
+    - Developer's own environment
+--
+- Integration/Test
+    - Latest baseline build deployed automatically
+--
+- Staging/Acceptance/Pre-production
+    - Production replica for release candidate testing or production troubleshooting
+--
+- Production/Live
+    - Main environment with real users
+
+---
+## Trend 1: Machines
+
+<img src="../../assets/10-vms.svg" width="90%">
+
+---
+## Trend 2: Infrastructure as code
+
+- Trend
+    - From one-off servers
+--
+    - Towards standard machines using commodity hardware
+--
+    - Towards managing and provisioning servers through config files
+        - Rather than physically configuring machines using interactive tools
+--
+- Notice the same goal: save time and reduce errors
+--
+- Enabler: apply development practices to config files
+    - Files can be versioned, branched, reviewed, released, etc.
+--
+- Example ([Terraform](https://github.com/terraform-providers/terraform-provider-aws/blob/master/examples/two-tier/main.tf))
+
+???
+Example: https://github.com/SolarDesignTool/aws-infrastructure/blob/master/cloudformation/6.rds.yaml
+
+---
+## Deployment today
+
+- Containers are the primary vehicle of deployment
+    - *Docker* being the primary (underlying) runtime
+--
+- Container benefits
+    - Less overhead
+    - Increased portability
+    - Developer productivity
+--
+- Deployed either on container services
+    - e.g. AWS Elastic Container Service, Google Kubernetes Engine, Azure Container Service
+--
+- ... or on own infrastructure, defined as code
+
+???
+Demo:
+- Dockerfile
+- ECR and maybe ECS
+
+---
+## Continuous delivery/deployment
+
+- Expand on ideas of CI
+--
+- Both referred to as CD
+--
+- Continuous delivery
+    - Every working version **can be** depoyed
+--
+- Continuous deployment
+    - Every working version **is** deployed
+
+???
+- Demo: Deployment of some service to prod
+
+---
+## Benefits of CD
+
+- Faster time to market
+--
+- Lower risk of failed releases
+--
+- Higher degree of automation
+--
+- Happier teams
+
+---
+## Build infrastructure evolution
+
+1. Manually configured dedicated build server(s)
+--
+1. Build process defined as code
+--
+1. Server infrastructure defined as code
+--
+1. Desired service defined as code
+
+???
+- Early days - Jenkins with manual config
+- Why pay for server that you are not using?
+- Demo: GitLab CI / CD (and limitations), GitHub Actions; push slides, see they are updated
+
+---
+## Key takeaways
+
+- Two main phases: building some artifact and then deploying it
+--
+- Multiple environments and a CI/CD pipelines make things easier
+--
+- Main goal behind automation: save time and reduce errors
+--
+- Version control systems are a common theme/enabler
+--
+- Once again, declarative configuration is both attractive and popular
+
+---
+## Reading assignment
+
+Mandatory:
+
+- Wiki-like entry: [Continuous Integration by Martin Fowler](https://www.martinfowler.com/articles/continuousIntegration.html)
+- 17 min talk: [Continuous Delivery by Martin Fowler](https://www.youtube.com/watch?v=aoMfbgF2D_4)
+
+Recommended:
+
+- Wiki-like entry: [Infrastructure as Code by Martin Fowler](https://www.martinfowler.com/bliki/InfrastructureAsCode.html)
+- Book: [Continuous Inegration](https://www.goodreads.com/book/show/1311542.Continuous_Integration)
+- Book: [Continuous Delivery](https://www.goodreads.com/book/show/8686650-continuous-delivery)
+
+---
+class: middle, center
+# Questions?
+
+  </textarea>
+  <script src="https://remarkjs.com/downloads/remark-0.15.0.min.js"></script>
+  <!-- Remark Wiki: https://github.com/gnab/remark/wiki -->
+  <script>
+    const slideshow = remark.create({
+              highlightStyle: 'github',
+              highlightLines: 'true',
+              highlightSpans: true,
+              ratio: '16:9',
+              countIncrementalSlides: false
+    });
+  </script>
+</body>
+</html>
