@@ -26,6 +26,6 @@ jobs:
           username: ${{ secrets.LT_VU_MIF_GRIMSA_USERNAME }}
           password: ${{ secrets.LT_VU_MIF_GRIMSA_PASSWORD }}
           port: ${{ secrets.LT_VU_MIF_GRIMSA_SSH_PORT }}
-          source: "index.html,se,research"
+          source: "index.html,se,research,googlef2f53d0c3856c5be.html"
           target: "www"
           rm: true
