@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" href="slides-style.css" type="text/css">
+		<style>
+.semi-transparent {
+  opacity: 0.5
+}
+		</style>
+	</head>
+	<body>
+		<textarea id="source">
+class: center, middle, main-title
+
+# Software Engineering
+Design, UML class diagrams
+
+---
+## Plan
+
+- Today:
+    - Designing static structure
+- Next:
+    - Designing dynamic structure (interactions)
+???
+Let's talk about the design activity and practice communicating our designs using UML class diagrams.
+
+---
+## Recap: The basic problem - how?
+
+<br>
+
+.center[Requirements]
+
+.center[↓]
+
+.center[????]
+
+.center[↓]
+
+.center[Code]
+
+---
+## Recap: [High-level design](http://klevas.mif.vu.lt/~grimsa/se/2020/slides/03-vcs-design-deployment.html#28)
+
+- Design — a process to define the architecture, system elements, interfaces, and other characteristics of a system or system element, as well as the result of that process
+--
+- A designer generates alternative designs and evaluates them
+--
+- Model — a simplified representation of something, having enough details that help solve some problem, at the same time hiding all other details that do not
+--
+- How to communicate the design?
+    - In free form
+    - Or using standard notation (UML)
+???
+We'll be talking about UML going forward.
+
+---
+## Qualities of a good design
+
+- First of all, it must fulfil the requirements
+--
+- Then, it should both:
+    - Help **manage complexity**
+    - Support distribution of work
+    - Support future changes
+--
+- All of the above lead to *modularity* and *separation of responsibilities*
+
+???
+- Recall: limitations of the human mind
+
+---
+class: middle, center
+## [Demo](https://github.com/grimsa/practice--poker-hands/)
+
+---
+## UML class diagram
+
+Describes:
+- static structure (classes in an OO system)
+- (optionally) their attributes and methods
+- connections between classes
+
+???
+Agnostic to programming language used.
+
+--
+
+Does not describe:
+- details of how the classes interact with each other
+- how methods are implemented (algorithmic details)
+
+---
+## Some guidelines for OO design
+
+- Classes representing the domain model should do all domain work
+    - Rich (instead of anemic) domain model
+--
+- Focus on responsibilities and behaviour, not on data
+    - Anthropomorphism
+--
+- Hide implementation details
+    - Encapsulation
+--
+- Avoid duplication (DRY)
+    - A change should be limited to one place
+--
+- Prefer composition over inheritance
+
+---
+## Some more about information hiding
+
+- Fundamental cost in SE is accomodating change
+--
+- A change that modifies multiple components is more costly than a change that is isolated in a single component
+--
+- Therefore, define
+    - interfaces that capture stable aspects
+--
+    - implementations that capture changeable aspects
+--
+- Recommended: [Parnas: On the criteria to be used in decomposing systems into modules](https://blog.acolyer.org/2016/09/05/on-the-criteria-to-be-used-in-decomposing-systems-into-modules/)
+
+---
+## Caveat
+
+- You cannot create a design that anticipates **all** changes
+--
+    - Analogy with car engine maintenance
+--
+- Therefore, anticipate **likely** changes
+
+---
+## So what can we hide?
+
+- Algorithms
+???
+Sort
+--
+- Data representations
+???
+Encodings, XML/JSON
+--
+- Sources of information
+???
+COVID statistics
+--
+- Hardware specifics
+???
+Plug and play: same interface / different drivers (implementations)
+--
+- Specifics of external API or external domain
+???
+E.g. external API: file name must be 8 symbols or fewer.
+
+---
+## Bezos API mandate
+
+- Internal memo at Amazon (~2002) by Jeff Bezos (CEO)
+--
+- Best known from when an ex-Amazon employee accidentally posted his rant to a wider audience
+--
+- Secondary sources:
+    - [Just the API mandate](https://news.ycombinator.com/item?id=18916406)
+    - [Same with more context](https://gigaom.com/2011/10/12/419-the-biggest-thing-amazon-got-right-the-platform/) 
+
+---
+## Bezos API mandate
+
+> - **All teams will henceforth expose** their data and functionality through **service interfaces**.
+--
+> - Teams must communicate with each other through these interfaces.
+--
+> - There will be no other form of interprocess communication allowed: no direct linking, no direct reads of another team's data store, no shared-memory model, no back-doors whatsoever. **The only communication allowed is via service interface calls over the network.**
+
+---
+## Bezos API mandate (2)
+
+> - It doesn't matter what technology they use. HTTP, CORBA, PubSub, custom protocols -- doesn't matter. Bezos doesn't care.
+--
+> - **All service interfaces, without exception, must be** designed from the ground up to be **externalizable**. That is to say, the team must plan and design to be able to expose the interface to developers in the outside world. No exceptions.
+--
+> - Anyone who doesn't do this will be fired.
+
+--
+
+Notice principles:
+- Information hiding
+- Reusability
+
+---
+## Key takeaways
+
+- Decomposition: top-down works better than bottom-up
+--
+- Mindset and principles of design
+--
+- Qualities of a good design
+
+---
+class: middle, center
+# Questions?
+
+  </textarea>
+  <script src="https://remarkjs.com/downloads/remark-0.15.0.min.js"></script>
+  <!-- Remark Wiki: https://github.com/gnab/remark/wiki -->
+  <script>
+    const slideshow = remark.create({
+              highlightStyle: 'github',
+              highlightLines: 'true',
+              highlightSpans: true,
+              ratio: '16:9',
+              countIncrementalSlides: false
+    });
+  </script>
+</body>
+</html>
