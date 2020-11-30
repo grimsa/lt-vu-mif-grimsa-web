@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" href="slides-style.css" type="text/css">
+		<style>
+.semi-transparent {
+  opacity: 0.5
+}
+		</style>
+	</head>
+	<body>
+		<textarea id="source">
+class: center, middle, main-title
+
+# Software Engineering
+Software engineering at scale
+
+---
+## Organizational matters
+
+- 3rd delivery:
+    - This week
+    - Reminder: precondition for taking the exam is 1.5+ from the first 3 deliveries
+???
+Pasikartosiu - kelios komandos dar neturi susirinkę 1.5. Metas susitelkti ir susirinkti, kitaip bendrausime ir kitais metais.
+- Žodžiu esmė dėl diagramos, kad galite ir ne visos sistemos, o tik pagrindines dalis (kaip jums sakė), bet būtų gerai visos nors tai nėra griežtas reikalavimas šiuo atveju.
+
+--
+- Project presentations
+    - 2020-12-22 8:30
+    - Final lecture after presentations conclude (expected start around 12:30-13:00)
+--
+- Exam:
+    - 2021-01-05 12:00, remote written exam
+???
+- Dėl turinio patikslinsiu vėliau. Tikėtis atvirų klausimų. Tikėtina, kad per VMA, bet dar patikslinsiu.
+
+---
+## Plan
+
+- Today
+    - Last time about technical debt and legacy systems
+    - What does engineering at scale look like?
+    - Software evolution, operations, software engineering in organizations
+--
+- Remaining lectures
+    - (Guest lecture)
+    - Professional communication, presenting your work
+    - Project presentations and the final lecture
+--
+- Ad: [Short open lectures by Danske Bank](https://www.facebook.com/events/372419300709234/)
+    - First one today @ 17:00 by Vytautas Ašeris
+
+---
+## Outages
+
+- Forest logging permit system
+    - Retrieving permits for one county did not work
+--
+    - No big deal
+--
+- E-health system 2020 July outage
+    - Service outage started [07-20](https://www.vz.lt/paslaugos/2020/07/21/registru-centras-atstate-dauguma-sistemudar-neveikia-esvekata)
+    - Service restored on [07-29](https://www.registrucentras.lt/naujienos/index.php?mod=news&act=view&id=46466)
+???
+Dydis: 90 TB duomenų, įkeliama 100k dokumentų per dieną
+
+--
+- [AWS 2020 November outage](https://www.washingtonpost.com/business/economy/amazon-web-services-outage-stymies-businesses/2020/11/25/b54a6106-2f4f-11eb-860d-f7999599cbc2_story.html) in US East region
+    - Some services impacted for more than 24h
+    - Most people in US likely noticed
+
+???
+- Wednesday, ~1 day recovery
+- $11 bn revenue (LT GDP ~50 bn)
+- 45 % cloud services market share
+- Consider business cost of outages
+
+---
+## Different systems have different properties
+
+- System criticality
+    - In how much trouble are we in if it does not work?
+--
+- System availability requirements
+    - "Most of the time"
+    - SLAs, e.g. "99.999% requests must be fulfilled in less than 100 ms"
+???
+Formal and informal requirements
+
+---
+## Availability
+
+- Understood from a user's point of view
+--
+- Is the system *available* right now?
+--
+- Let's say a system is
+    - Not responding at all
+--
+    - Not responding for 10% of users
+--
+    - 1% of operations fail
+--
+    - Some operations take two times longer than expected
+--
+    - A few non-critical functions do not work
+
+---
+## High availability
+
+- [The higher the availability](https://en.wikipedia.org/wiki/High_availability#Percentage_calculation), the harder it is to achieve
+    - Going from 98% to 99% is fairly easy
+    - Going from 99.99% to 99.999% is much harder
+--
+- Achieved through
+    - No single point of failure (redundancy)
+--
+    - Reliable crossover (switching)
+--
+    - Failure detection (monitoring)
+--
+- More on this:
+    - [Site reliability engineering](https://landing.google.com/sre/books/)
+    - [Release It!](https://www.goodreads.com/book/show/1069827.Release_It_#)
+
+
+---
+## What do outages look like from the inside?
+
+- Small project (~10-20 employees)
+    - Client representative calls Project manager
+    - Project manager calls one/two key people (developer / infrastructure admin)
+    - People investigate, identify problem, think how to mitigate/fix
+???
+Permanent fix is planned after
+--
+- A mid-size bank (4000+ engineers)
+    - Services categorized by business impact
+    - Many roles (development, operations, support, situation management, etc.)
+    - Defined processes and metrics
+???
+SIMA - calls every 30 min with representatives, managers, postmortems
+Metrics - number of P0/P1 incidents KPI
+
+--
+- Internet-scale company (70 000+ engineers)
+    - ???
+
+---
+## Trends
+
+- Failures are inevitable
+???
+Prepare for them! (Release It!)
+--
+- "The bigger they are, the harder they fall" :)
+--
+    - More complex failure modes
+    - [Cascading failures](https://en.wikipedia.org/wiki/Cascading_failure)
+    - [Grey failrues](https://blog.acolyer.org/2017/06/15/gray-failure-the-achilles-heel-of-cloud-scale-systems/)
+--
+- The more complex the system, the more discipline is required
+    - Processes (change management, support, incident response)
+    - Metrics
+    - Monitoring
+    - Automation
+
+???
+Things we talk about in this course!
+
+Something has to work starting from exactly yyyy-MM-dd : feature toggles
+
+- Compartmentalization (regions, zones)
+- No "big-bang" deployments
+
+---
+## Roles within an organization
+
+- Support
+    - Answer user questions, help troubleshoot
+--
+    - Verify and triage incoming problem reports
+--
+- Operations
+    - Monitor if system is running in an acceptable way
+--
+    - Troubleshoot verified problem reports
+--
+    - Maintain operating environments
+--
+- Development
+    - Troubleshoot verified problem reports
+--
+    - Fix defects, prevent performance degradation
+--
+    - Add new features
+--
+    - Adapt to new environments, products and standards
+
+---
+## Maintenance lifecycle phase
+
+- Commonly perceived as fixing defects only
+--
+- Includes all of the areas mentioned before (and more)
+--
+- The most expensive part (around 60-80% TCO)
+--
+- Out of this, ~80% is due to enhancements, not fixes
+
+---
+## Legacy software
+
+- Is useful and successful software that over time became a victim of its own success
+--
+- Mitigating requires continuous effort. For example:
+--
+    - Ideas for deeper domain model/better internal design - with every other new feature
+--
+    - New Java language version every 6 months
+--
+    - New framework release every ~3-4 months
+--
+    - New dependency releases every week
+--
+    - New build tool release every ~1-6 months
+--
+    - New build server version every ~1 month
+--
+    - New infrastructure features - constantly
+--
+    - Third-party API deprecations every ~ year
+
+---
+## Key takeaways
+
+- Different systems have different operational requirements
+--
+- What is high availability and how to achieve it
+--
+- Maintenance is by far the most expensive lifecycle phase
+--
+- Maintenance is vital to the long-term success of a system
+
+---
+class: middle, center
+# Questions?
+
+</textarea>
+<script src="https://remarkjs.com/downloads/remark-0.15.0.min.js"></script>
+<!-- Remark Wiki: https://github.com/gnab/remark/wiki -->
+<script>
+    const slideshow = remark.create({
+            highlightStyle: 'github',
+            highlightLines: 'true',
+            highlightSpans: true,
+            ratio: '16:9',
+            countIncrementalSlides: false
+    });
+</script>
+</body>
+</html>
