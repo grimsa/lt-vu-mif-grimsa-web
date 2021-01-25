@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Gediminas Rimša > Research > Current interests and topics offered</title>
+</head>
+
+<xmp theme="spacelab" style="display:none;">
+# My research interests
+
+I am interested in sustainability and how it relates to software.
+
+This could be a good first resource: [What does Sustainability mean *in* and *for* Software Engineering?](https://www.researchgate.net/profile/Birgit_Penzenstadler/publication/255949741_What_does_Sustainability_mean_in_and_for_Software_Engineering/links/00b49520e7541932dd000000.pdf)
+
+Based on it, we can identify the following directions:
+
+1. *Software for sustainability* - designing and building specialized software that directly supports [UN sustainable development goals](https://sdgs.un.org/goals)
+2. *Sustainable software* - designing and building software of any purpose while considering sustainability goals
+    1. Improving the sustainability of the software development process (how software is built)
+    2. Improving the sustainability of the software system (how the produced software behaves, and what qualities it has)
+
+Some general resources:
+
+* [What does Sustainability mean *in* and *for* Software Engineering?](https://www.researchgate.net/profile/Birgit_Penzenstadler/publication/255949741_What_does_Sustainability_mean_in_and_for_Software_Engineering/links/00b49520e7541932dd000000.pdf)
+* [Principles of Sustainable Software Engineering](https://principles.green/)
+* [Software development methodology in a Green IT environment](https://tel.archives-ouvertes.fr/tel-01724069/document)
+
+Naturally, this is quite abstract and high-level. But take a look at a few select ideas below.
+
+# Research topics offered for students
+
+The descriptions below are just initial introductions.
+
+If you are interested, send me an [email](mailto:gediminas.rimsa@mif.vu.lt), do some research of your own, and then let's discuss what exactly you would be working on.
+
+## Migrating microservices to serverless platform
+
+Serverless computing model allows for a much more efficient use of resources.
+
+However, it is not clear if the challenges inherent to this computing model can be mitigated sufficiently to justify the migration from a more common microservices approach.
+
+Some of the questions to be answered could be:
+
+- Even a small Spring Boot microservice that uses ORM can take up to 10 seconds to start. Does it make some (or all) of these technologies inherently not suitable for implementing serverless web application backends?
+- How many functions should one microservice be broken down into?
+- Would there be any significant differences in how continuous delivery should be organized for functions instead of services?
+
+Proposed technologies: Java, Spring Boot, HTTP APIs, AWS Lambda
+
+## Java packaging strategies
+
+The way Java code is organized into package hierarchies plays an important role in evolving mid-size or larger systems.
+
+Different packaging strategies exist: "package by feature", "package by layer", etc., each exhibiting different qualities.
+
+Some of the questions to be answered could be:
+
+- What are the most prevalent packaging strategies in the wild? Do their seem accidental, or intentional?
+- What qualities does a "good" package hierarchy exhibit?
+- If we establish a package hierarchy and packaging principles, can we ensure that the system does not deviate from them over time?
+- For any given package hierarchy, could we measure how "good" it is?
+- For any given package hierarchy, could improvements be suggested automatically? Could they be prioritized?
+- How can we maximise the benefits of package-private visibility?
+- Etc.
+
+Proposed technologies: Java, ArchUnit
+
+Proposed resources:
+
+- [Package by feature, not by layer](http://www.javapractices.com/topic/TopicAction.do?Id=205)
+- [Blog post describing one more packaging strategy](https://javadevguy.wordpress.com/2017/12/18/happy-packaging/)
+
+## Your topic
+
+See another problem on the way to sustainability?
+
+Maybe something is painfully not efficient/wasteful? Or maybe you see how software could guide decisions towards sustainability?
+
+Please reach out, so we can find a way how to make it into a research topic.
+</xmp>
+
+<script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>
+</html>
