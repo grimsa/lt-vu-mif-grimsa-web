@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" href="slides-style.css" type="text/css">
+		<style>
+.semi-transparent {
+  opacity: 0.5
+}
+		</style>
+	</head>
+	<body>
+		<textarea id="source">
+class: center, middle, main-title
+
+# Software Engineering
+Selected tools
+
+---
+## Before we begin
+
+- Pre-course questionnaire
+???
+- TODO - compile an overview: https://emokymai.vu.lt/mod/questionnaire/report.php?instance=8&group=0
+-----
+--
+- [1st delivery requirements](https://emokymai.vu.lt/mod/page/view.php?id=28602)
+???
+- Two weeks, go. Best try to do something in a week, and then get feedback.
+--
+- A random productivity tip - get a second screen
+???
+- I assume most of you are using laptops or desktops with a single screen
+- If that is the case, I highly recommend investing into a second screen
+- A used 24 inch screen costs around 40-50 EUR.
+- The cheaper models often can not pivot, but not everyone is into that.
+- Photo: https://photos.google.com/photo/AF1QipPvjju8PFgOoDW58aUNA5SrgFTFDVWuRzUyRJLU
+
+---
+## Goals for today
+
+- Have a basic understanding of how to use git
+--
+- Have some ideas how you could track and organize tasks in your project
+--
+- Know of some other useful tools
+
+---
+class: middle, center
+## Version control systems
+
+---
+## The need
+
+> SE = *Multi-person construction of multi-version software.*
+
+--
+Notice some challenges...
+--
+- Multi-person
+  - What changed since the last time I checked?
+  - Who has the latest version of file X?
+  - What if I need to edit file X today?
+--
+- Multi-version
+  - What changed between version 1.0 and 1.2?
+  - Who wrote this!?!
+  - Why do we have this code?
+???
+- The answer might as well be yourself, 6 months ago :)
+
+---
+## There's a tool for that
+
+**Version control system** - a software tool that helps manage changes to (source code) files over time.
+???
+- Alternative term "SCM - Source Code Management"
+- No reason why it can not manage any kind of files, e.g. data
+
+--
+- State of the practice
+  - Every non-throwaway project uses VCS
+--
+  - *git* is the dominant VCS
+???
+- Random post on the internet claims ~70% market share in 2020
+- Others: SVN, Mercurial, CVS, Jazz, etc.
+
+---
+## git
+
+- Command-line application
+--
+  - But GUIs exist
+--
+- Some resources
+  - [Official docs](https://git-scm.com/doc)
+  - [A decent tutorial](https://developer.ibm.com/tutorials/d-learn-workings-git/)
+???
+- Nice videos
+
+---
+## Key concepts and commands
+- Repository
+???
+- `git init folder`
+- Repository is just a folder that has some "special" folder for git metadata
+- Can already be imported in GUI client
+-----
+--
+- Diff
+???
+- `git diff`
+- Diff = Comparison between two versions
+- Show in GUI
+-----
+--
+- Staging area
+???
+- `git add .`
+- Show in GUI (can stage selected parts)
+- Staging area - you choose which files participate in the next commit
+-----
+--
+- Commit
+???
+- `git commit -m "message"`
+- Commit = A change set that is made permanent
+- Every commit has a message, and also an author and ID (hash)
+- Show Figure 3 from guide
+-----
+--
+- History
+???
+- Make several more local commits, show history
+- Show Figure 4
+- Show pv-system-design-service history (develop branch only)
+- This was linear history for now
+-----
+--
+- Branch
+???
+- `git checkout -b feature`
+- Branch - some particular (named) track of history
+- Can have multiple branches with different changes
+-----
+--
+- Tag
+???
+- `git tag v1`
+- git commit something
+- git checkout v1
+-----
+--
+- Checkout
+???
+- git checkout {tag, branch, commit hash}
+- Open file in notepad
+- Show commits with multiple files
+-----
+--
+- Merge
+???
+- Merge = Inclusion of changes from one branch into another
+- Merge feature branch into develop
+- Figure 5 / Figure 6
+- `git merge feature` while we are on `master`: https://git-scm.com/docs/git-merge
+
+---
+## Collaboration using git
+
+- One repository is treated as the source of truth
+???
+- Runs on some always-available remote server
+--
+- Everyone has its own local repository (a clone)
+???
+- A clone of the remote one
+- Everything works offline (you have a full copy)
+--
+- Everyone regularly synchronizes with that one remote repository
+    - `git push`
+    - `git pull`
+
+---
+## Git repository hosting
+
+- Dominant providers:
+  - [GitHub](https://github.com)
+  - [GitLab](https://gitlab.com), [VU has an instance](https://git.mif.vu.lt)
+--
+- Both also provide additional services/tools
+
+---
+## Branching models
+
+- [Trunk-based development with short-lived feature branches](https://trunkbaseddevelopment.com/short-lived-feature-branches/)
+--
+- [GitFlow](https://nvie.com/posts/a-successful-git-branching-model/)
+
+???
+- Demo of trunk-based development
+- Create repo
+- Clone
+- Checkout branch, commit something, create PR, write review comments
+- checkout develop
+- checkout another feature branch, commit something, create PR
+
+---
+## Some tips
+
+- Practice keeping history useful
+???
+- Small changes, well described, linked to issues
+git is more like a journal of the changes, rather just one big blob of changes at the end of the day (backup).
+Good messages is extremely helpful of getting context of why changes were made and who made them.
+--
+- Version everything
+--
+  - Text-based formats are superior
+???
+- Example: these slides @ https://github.com/grimsa/lt-vu-mif-grimsa-web
+- If you notice any grammatical or other mistakes - please create a pull request :)
+--
+  - Avoid storing derived/compiled resources
+???
+- `.gitignore`
+--
+  - Never store secrets like passwords, secret keys, etc.
+--
+- Pick one branching model and stick with it
+--
+- Practice code reviews
+???
+- One of the best ways to grow your skills
+- Do not forget it is about code, not people (not "you are stupid", but "this code could be better if written like this, because reasons")
+- Example: https://github.com/SolarDesignTool/math-applications/pull/77
+
+---
+## VCS in practice
+
+- Basic questions
+  - What changed recently?
+???
+- `git pull` and then check recent changes
+--
+  - Who wrote/knows about this section of the code?
+???
+- Git history for a single file
+--
+  - Who changed what in the code, when did it happen and for what reason?
+???
+- Git blame
+--
+- (Archeology demo)
+???
+- https://github.com/qos-ch/logback/blob/master/logback-access/src/main/java/ch/qos/logback/access/spi/AccessEvent.java
+- Search Image suppressed
+- Blame twice, click on commit
+- End up here: https://github.com/qos-ch/logback/commit/69290e182f8db6589eadd5a3c485a37255384893
+
+---
+class: middle, center
+## Task management
+
+---
+## Basics
+
+- Task
+  - Describes specific things to be done
+  - A lot of those
+--
+- Roadmap
+  - Milestones/releases/versions
+--
+- Tags/labels
+  - Helps filter/search for tasks
+--
+- Boards
+  - Visualize work
+
+???
+Demo:
+- A single task:
+  - Feature: https://solardesigntool.atlassian.net/browse/LYRA-595
+  - Bugfix, visual: https://solardesigntool.atlassian.net/browse/LYRA-5306
+  - Bugfix, technical: https://solardesigntool.atlassian.net/browse/LYRA-5223
+  - Unclear (placeholder): https://solardesigntool.atlassian.net/browse/LYRA-272
+  - Each task has an ID, and an assignee
+- Task backlog (list): https://solardesigntool.atlassian.net/secure/RapidBoard.jspa?rapidView=9&projectKey=LYRA&view=planning.nodetail&issueLimit=100
+  - We have a lot of tasks (400+ open, 4000+ resolved). Need some way to organize them / focus on smaller parts
+- Roadmap - different versions: https://solardesigntool.atlassian.net/wiki/spaces/GTG/pages/1423638536/Product+Roadmap
+  - Each task can be assigned to a version
+  - Versions then help track progress and stay focused: https://solardesigntool.atlassian.net/projects/LYRA?selectedItem=com.atlassian.jira.jira-projects-plugin:release-page
+- Filtering
+  - Based on versions and tags - in list
+  - Based on assignee
+- Boards - visualize work that is currently relevant
+  - https://solardesigntool.atlassian.net/secure/RapidBoard.jspa?rapidView=9&projectKey=LYRA
+
+---
+## Recreating the same in GitHub
+
+- Tasks → Issues
+- Roadmap → Milestones
+- Tags → Labels
+- Boards → Projects
+
+???
+- Labels and milestones: https://github.com/spring-projects/spring-boot/labels
+- Boards in same project: https://github.com/athensresearch/athens/projects/23, https://github.com/athensresearch/athens/projects/20
+- 
+- Other tools possible too
+
+---
+## Tips
+
+- Keep track of all tasks
+--
+- Prefer small tasks, e.g. that you can complete in 4 hours
+--
+- Prioritize - create the first milestone and separate tasks that are relevant now and later
+--
+- Distinguish between fixes and new features
+--
+- For larger teams
+  - Tag issues with your team's area
+  - Visualise progress in separate boards
+???
+- Keeping a whole-project board can be a good idea too
+
+---
+class: middle, center
+## Other tools
+
+---
+## Collaboration
+
+- Documentation
+???
+- Requirements
+- How to do something
+- Explanation
+- Reference
+- Can be in code, next to docs
+- Markdown!
+- https://docs.gitlab.com/ee/user/project/requirements/
+--
+- Messaging (MS Teams)
+???
+- Multi-channel/thread messengers. We use Slack, but MS teams does the same.
+- If you want private channel created - let me know.
+--
+- Whiteboards ([Miro](https://miro.com), [Jamboard](https://jamboard.google.com))
+--
+- Time trackers ([Toggl](https://track.toggl.com))
+???
+- Could be a useful input to compare with internal evaluation results
+
+---
+class: middle, center
+# Questions?
+
+  </textarea>
+  <script src="https://remarkjs.com/downloads/remark-0.15.0.min.js"></script>
+  <!-- Remark Wiki: https://github.com/gnab/remark/wiki -->
+  <script>
+    const slideshow = remark.create({
+              highlightStyle: 'github',
+              highlightLines: 'true',
+              highlightSpans: true,
+              ratio: '16:9',
+              countIncrementalSlides: false
+    });
+  </script>
+</body>
+</html>
