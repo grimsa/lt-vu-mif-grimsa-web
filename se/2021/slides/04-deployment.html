@@ -1,0 +1,284 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" href="slides-style.css" type="text/css">
+		<style>
+.semi-transparent {
+  opacity: 0.5
+}
+		</style>
+	</head>
+	<body>
+		<textarea id="source">
+class: center, middle, main-title
+
+# Software Engineering
+Deployment
+
+---
+## Before we begin
+
+- Deadline for the requirements specification is next week
+  - How's it going?
+???
+- Do you feel you have enough theorethical knowledge to start?
+- Is it clear what you have to do?
+
+---
+## Goals for today
+
+- Have an idea of the next milestone
+--
+- Can explain what is design and what is a model
+--
+- Can read and draw simple UML deployment diagrams
+
+---
+class: middle, center
+## Zero-feature release
+
+---
+## Next milestone: zero-feature release
+
+Let's say you are creating a command-line tool...
+--
+```
+ main() {
+    printf("hello, world\n");
+ }
+```
+--
+... and then
+```
+> buildTool program.txt program.exe
+Build success.
+> program.exe
+hello, world
+>
+```
+???
+- Zero-feature webapp: https://gitname.github.io/react-gh-pages/
+
+---
+## In your case
+
+- A *deployed* minimal version of your app, e.g.:
+  - One webpage with static content
+  - Mobile app with one "welcome" screen
+  - Command-line tool that prints something to console
+--
+- All team's core technologies are used
+--
+- Development tools agreed upon and set up
+--
+- Infrastructure is operational
+--
+- Automated deployment process
+
+???
+- Quite a lot to do. Not much "writing code" involved - more like gluing things together.
+- First step would be to figure out what the system should be like at a high level (technical perspective)
+
+---
+## Why?
+
+- To save you time (less rework, faster development once everything is set up)
+--
+- To give you more hands-on experience with various tools and practices
+
+---
+class: middle, center
+## High-level design
+
+---
+## The basic problem: how?
+
+<br>
+
+.center[Requirements]
+
+.center[↓]
+
+.center[????]
+
+.center[↓]
+
+.center[Code]
+
+---
+## It depends
+
+- Small and simple problems
+    - Solved with little attention to design
+--
+- Big and difficult problems
+    - Design largely determines how complex software can become
+
+---
+## Design
+
+> 1. [**process**] to define the architecture, system elements, interfaces, and other characteristics of a system or system element.
+> 2. **Result** of the process in (1).
+> <br><br>— <cite>Systems and software engineering - Vocabulary, ISO 24765:2017</cite>
+
+---
+## Why is design essential for system's success?
+
+- Code is only limited by what people can imagine
+--
+- However, [human mind is very limited](https://javadevguy.wordpress.com/2017/11/02/transcending-the-limitations-of-the-human-mind/)
+???
+How big a codebase can one developer know deeply. 100k LoC?
+
+---
+## How to communicate design?
+
+- In a free form
+  - Diagrams and drawings
+  - Text
+  - Tables
+--
+- Using standard notation
+  - **[Unified Modelling Language (UML)](https://en.wikipedia.org/wiki/Unified_Modeling_Language)**
+  - [The C4 model](https://c4model.com/)
+
+???
+We will only be looking at UML in this course, and only at a subset of diagrams.
+
+---
+## Models
+
+> A model **represents some aspect of reality** or an idea that is of interest.
+> A model is a **simplification**.
+> It is an interpretation of reality that **abstracts** the aspects
+> relevant to solving the problem at hand and **ignores extraneous detail**.
+> <br><br>— <cite>Eric Evans, [Domain-Driven Design](https://www.goodreads.com/book/show/179133.Domain_Driven_Design), 2003</cite>
+
+???
+- A model is an abstraction.
+- Paralell with memory of some event - "what did you do on the day of your last birthday"? You only remember key details.
+
+---
+## Model of average life expectancy
+
+<img src="../../assets/05-map.png" width="70%">
+
+<div style="font-size: medium; text-align: center">© MapChart.net under the Creative Commons Attribution-ShareAlike 4.0 International License</div>
+
+???
+- Source: https://commons.wikimedia.org/wiki/File:Countries_by_average_life_expectancy_(2015).png
+- Life expectancy in a large country (e.g. Russia) varies quite a lot per region, but this model does not take it into account.
+
+---
+## More on models
+
+- A model is merely a human construct to help us better understand the real world
+--
+- We can model what was, what is, and **what could be**
+
+???
+- Architects submitting alternative models (ideas) for some to-be building
+
+---
+## More on design
+
+- Design is about defining (modelling) a system or system element so that it:
+  - achieves the goals
+  - satisfies constraints
+  - has other desired qualities
+--
+- Design can be done at different levels
+  - With different goals
+???
+- Design a building, design a lecture hall, design a door handle, design a screw
+--
+- There are always multiple alternative viable designs
+--
+- The goal is to choose the best one
+  - Analogy with planning - selecting the best possible future
+
+---
+## UML deployment diagram
+
+- Static structure of the system at a very high level
+--
+- Models physical nodes and what artifacts are deployed on them
+--
+- A few examples:
+    - [Clustered webapp](https://www.uml-diagrams.org/web-application-clusters-uml-deployment-diagram-example.html?context=depl-examples)
+    - [Small system](https://en.wikipedia.org/wiki/Deployment_diagram#/media/File:Deployment_Diagram.PNG)
+    - [Clustered webapp](https://sites.google.com/site/kampaaniad2016/3-projekt/3-6-uml-deployment-diagram)
+    - [Android app](https://www.researchgate.net/figure/The-Deployment-Diagram-for-the-BBS-Android-application_fig6_323704711)
+
+???
+- You could practice a software architects role while doing high-level design
+
+---
+## Technology choices
+
+> The best framework is the one you already know.
+> <br><br>— <cite>Folklore</cite>
+
+--
+<br>
+
+> Choose boring technology.
+> <br><br>— <cite>Dan McKinley ([blog post](https://mcfunley.com/choose-boring-technology), [slide deck](http://boringtechnology.club/))</cite>
+
+???
+- Tech choices are also very much the job of a software architect
+
+Tip: Leverage (free) hosted services
+- VU resources
+- Public clouds (AWS, Google, etc.)
+
+---
+## Next
+
+- Have an idea of the next milestone
+--
+- Draw a deployment diagram for your own system
+???
+For 2nd and 3rd group you should also figure out if each team will produce a separate artifact or will it be a single one.
+--
+- Recommended material
+  - [Blog post: Transcending limitations of the human mind](https://javadevguy.wordpress.com/2017/11/02/transcending-the-limitations-of-the-human-mind/)
+  - [Talk: 'A Philosophy of Software Design' by John Ousterhout](https://www.youtube.com/watch?v=bmSAYlu0NcY)
+
+---
+class: middle, center
+# Questions?
+
+  </textarea>
+  <script src="https://remarkjs.com/downloads/remark-0.15.0.min.js"></script>
+  <!-- Remark Wiki: https://github.com/gnab/remark/wiki -->
+  <script>
+    const slideshow = remark.create({
+              highlightStyle: 'github',
+              highlightLines: 'true',
+              highlightSpans: true,
+              ratio: '16:9',
+              countIncrementalSlides: false
+    });
+  </script>
+</body>
+</html>
+
+
+  </textarea>
+  <script src="https://remarkjs.com/downloads/remark-0.15.0.min.js"></script>
+  <!-- Remark Wiki: https://github.com/gnab/remark/wiki -->
+  <script>
+    const slideshow = remark.create({
+              highlightStyle: 'github',
+              highlightLines: 'true',
+              highlightSpans: true,
+              ratio: '16:9',
+              countIncrementalSlides: false
+    });
+  </script>
+</body>
+</html>
