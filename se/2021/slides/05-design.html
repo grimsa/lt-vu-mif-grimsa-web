@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" href="slides-style.css" type="text/css">
+		<style>
+.semi-transparent {
+  opacity: 0.5
+}
+		</style>
+	</head>
+	<body>
+		<textarea id="source">
+class: center, middle, main-title
+
+# Software Engineering
+Architecture | Design
+
+---
+## Before we begin
+
+- 1st delivery
+--
+- Next week: guest lecture about DevOps
+
+---
+## Goals for today
+
+- Can identify some of the architectural decisions in your system
+--
+- Can explain information hiding in your own words
+--
+- Can read and create UML class diagrams
+
+---
+class: middle, center
+## Architecture
+
+???
+- We talked a little bit about the design the last time and about the high-level view of a Deployment diagram.
+- It was defined as "[a process] to define the architecture, system elements, interfaces, and other characteristics of a system or system element." or as the result of such process.
+
+---
+## Architecture
+
+- A few informal definitions
+--
+  - "The important stuff — whatever that is"
+???
+- 1. Decisions that have high impact on the system and its stakeholders
+--
+  - "Things that are expensive to change later"
+???
+- 2. Decisions that "have to" be right the first time.
+
+---
+## Exercise: architecture of a house
+
+- Let's say we're building a house
+- Which decisions would be "architectural decisions"?
+
+???
+- Oh, I want an extra room for work
+- I want to add a window to a bathroom
+- New requirement: I want to have extra electrical outlets on a wall where there are none
+- Constraint: I have trouble walking up and down the stairs
+- Locations for pipes/plumbing/communications hidden in the walls
+
+- Links:
+  - Something like this: https://www.roomsketcher.com/wp-content/uploads/2017/08/RoomSketcher-Custom-2D-Floor-Plan-Branding.jpg
+  - Architectural views: https://mano.eika.lt/uploads/apartment/draw/2019/12/90554cea70e0dfbde95f5f64bf1d146d5f61a871.pdf
+
+- A designer generates alternative designs and evaluates them. There is no single "right" design/architecture.
+
+---
+## Architecture
+
+> A software architecture is a **description** of the **subsystems** and **components**
+> of a software system and the **relationships** between them.
+> <br>[…]<br>
+> The software architecture of a system is an artifact that results from the software **design** activities.
+> <br><br> — <cite>[Pattern-Oriented Software Architecture](https://www.goodreads.com/book/show/85039.Pattern_Oriented_Software_Architecture_Volume_1), 1996</cite>
+
+--
+
+Essentially a set of **components** and **connectors** at a software system level; a blueprint for a software system.
+
+---
+## So where to start?
+
+Always start with the problem.
+--
+> **Without requirements** that your solution must fulfill, all **design** work […] **is just guessing** at best.
+> <br><br> — <cite>Frank Buschmann, [SE Radio podcast E54](https://www.se-radio.net/2007/04/episode-54-interview-frank-buschmann/)</cite>
+
+--
+Already familiar first steps:
+--
+- System requirements
+--
+- System context diagram
+--
+- System deployment diagram
+
+???
+Let's take some time to discuss what success would look like
+
+---
+## Qualities of a good design
+
+- First of all, it must fulfil the requirements
+--
+- Then, it should:
+    - Help **manage complexity**
+    - Support distribution of work
+    - Support future changes
+???
+- Recall: limitations of the human mind    
+--
+- All of the above lead to *modularity* and *separation of responsibilities*
+
+---
+## On modularity
+
+- Fundamental cost in SE is accomodating change
+--
+- A change that modifies multiple components is more costly than a change that is isolated in a single component
+--
+- Therefore
+  - components and interfaces should capture stable aspects
+--
+  - implementation details should capture changeable aspects
+???
+- Interface vs. implementation
+--
+- More on this: [Parnas: On the criteria to be used in decomposing systems into modules](https://blog.acolyer.org/2016/09/05/on-the-criteria-to-be-used-in-decomposing-systems-into-modules/)
+
+???
+- Information hiding.
+- "Every module in is characterized by its knowledge of a design decision which it hides from all others.
+Its interface or definition was chosen to reveal as little as possible about its inner workings."
+
+---
+## Caveat
+
+- You cannot create a design that anticipates **all** changes
+--
+  - Analogy with packing things in a backpack
+???
+- You can not make everything easily accessible
+- More of a design example: making engine easily serviceable
+--
+- Therefore, anticipate **likely** changes
+
+---
+## So what can we hide?
+
+- Algorithms
+???
+- 1. Sorting algorithms
+--
+- Data representations
+???
+- 2. CSV/XML/JSON/EXCEL - just a file with data
+--
+- Sources of information
+???
+- 3. COVID statistics - portal / open data
+--
+- Hardware specifics
+???
+- 4. Plug and play: same interface / different drivers (implementations)
+--
+- Specifics of external API or external domain
+???
+- 5. Old file system: file name must be 8 symbols or fewer -> shorten file names to `Abcde~1.ext`
+
+All of these together might be called "business logic" - i.e. all the details of how the business works.
+
+---
+class: middle, center
+## Demo: [top-down design](https://github.com/grimsa/practice--poker-hands/)
+
+---
+## Bezos API mandate
+
+???
+Getting back to the architectural decisions.
+--
+- Internal memo at Amazon (~2002) by Jeff Bezos (CEO)
+--
+- Best known from when an ex-Amazon employee accidentally posted his rant to a wider audience
+--
+- Secondary sources:
+    - [Just the API mandate](https://news.ycombinator.com/item?id=18916406)
+    - [Same with more context](https://gigaom.com/2011/10/12/419-the-biggest-thing-amazon-got-right-the-platform/) 
+
+---
+## Bezos API mandate
+
+> - **All teams will henceforth expose** their data and functionality through **service interfaces**.
+--
+> - Teams must communicate with each other through these interfaces.
+--
+> - There will be no other form of interprocess communication allowed: no direct linking, no direct reads of another team's data store, no shared-memory model, no back-doors whatsoever. **The only communication allowed is via service interface calls over the network.**
+
+---
+## Bezos API mandate (2)
+
+> - It doesn't matter what technology they use. HTTP, CORBA, PubSub, custom protocols -- doesn't matter. Bezos doesn't care.
+--
+> - **All service interfaces, without exception, must be** designed from the ground up to be **externalizable**. That is to say, the team must plan and design to be able to expose the interface to developers in the outside world. No exceptions.
+--
+> - Anyone who doesn't do this will be fired.
+
+--
+
+Notice principles:
+- Information hiding
+- Reusability
+
+---
+class: middle, center
+## UML class diagram
+
+???
+A way to document the static structure of the domain model / implementation
+
+---
+## UML class diagram
+
+Describes:
+- static structure (e.g. classes in an OO system)
+--
+- (optionally) their attributes and methods
+--
+- connections between classes
+
+???
+Agnostic to programming language used.
+
+Examples:
+- https://d2slcw3kip6qmk.cloudfront.net/marketing/pages/chart/class-diagram-for-hotel-management-system-UML/UML_class_diagram_hotel-949x683.PNG
+- https://www.visual-paradigm.com/guide/uml-unified-modeling-language/uml-class-diagram-tutorial/
+- https://www.uml-diagrams.org/class-diagrams-overview.html
+
+--
+
+Does not describe:
+- details of how the classes interact with each other
+--
+- how methods are implemented (algorithmic details)
+
+---
+## Some tips
+
+- Focus on responsibilities and behaviour, not on data
+--
+- Classes representing the domain model should do all domain work
+    - Rich (instead of anemic) domain model
+--
+- Avoid duplication (DRY)
+    - A change should be limited to one place
+--
+- Prefer composition over inheritance
+
+---
+## Next
+
+- Task: Identify the important architectural decisions in your system
+--
+- Guest lecture about DevOps
+
+---
+class: middle, center
+# Questions?
+
+  </textarea>
+  <script src="https://remarkjs.com/downloads/remark-0.15.0.min.js"></script>
+  <!-- Remark Wiki: https://github.com/gnab/remark/wiki -->
+  <script>
+    const slideshow = remark.create({
+              highlightStyle: 'github',
+              highlightLines: 'true',
+              highlightSpans: true,
+              ratio: '16:9',
+              countIncrementalSlides: false
+    });
+  </script>
+</body>
+</html>
