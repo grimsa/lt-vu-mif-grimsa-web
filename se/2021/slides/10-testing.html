@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" href="slides-style.css" type="text/css">
+		<style>
+.semi-transparent {
+  opacity: 0.5
+}
+		</style>
+	</head>
+	<body>
+		<textarea id="source">
+class: center, middle, main-title
+
+# Software Engineering
+More on testing
+
+???
+- The last time Janis talked about testing in general
+- A few practical aspects + a bit about automation
+
+---
+## Goals
+
+- Can write test cases for simple functions (and automate them)
+
+---
+## Software testing
+
+- Everyone who develops software does testing
+--
+- Testing is *running* the program with *selected inputs* and checking that *actual* results match *expectations*
+--
+- We can do it *at random* or *systematically*
+
+---
+## Example: Print constant text
+
+```
+class MyProgram {
+    public static void main() {
+        System.out.println("Hello, world!");
+    }
+}
+```
+
+--
+- Always behaves the same way
+--
+- Expected output: constant `Hello, world!`
+--
+
+Testing is trivial
+
+---
+## Example: Twice the number
+
+`<T extends Number> T twice(T number)`
+
+--
+- `T` is `Byte`
+   - Inputs [-128; 127]
+   - Input space: 256 different values
+--
+- `T` is `Long`
+   - Inputs [–9,223,372,036,854,775,808; 9,223,372,036,854,775,807]
+   - Input space: 1.8e19 different values
+--
+- `T` is `BigInteger`
+   - Input space: (loosely) infinite
+--
+
+Testing with all inputs is not **possible** or **feasible**
+
+---
+## Input selection
+
+- How do we choose which inputs to test with?
+--
+    - *Test case* = particular choice of input data + expected outcome
+--
+- Random selection is not efficient
+--
+- Fundamental idea
+    - Correct results for tested inputs should be representative of correct results for untested inputs
+--
+- There are heuristics that help us choose (*test case design*)
+--
+    - Equivalence groups (black-box)
+    - Boundaries (black-box)
+    - Control flow (white-box)
+    - States (white-box)
+---
+## Equivalence groups
+
+Test cases for `int sqare(int number)`?
+
+--
+
+Idea
+- A fault in code often affects a whole group of similar inputs
+- It's unlikely that values within the same group of similar inputs produce different results
+
+--
+
+Therefore
+1. Partition input space into logical equivalence groups
+2. Choose input values from each group
+
+???
+E.g. positive, negative, 0
+
+---
+## Boundary conditions
+
+Test cases for `int sqare(int number)`?
+
+--
+
+Idea
+- Faults are more likely at the boundaries of equivalence groups
+    - E.g. confusion between `>` and `>=`, and other *off-by-one errors*
+
+--
+
+Therefore
+- Choose input values at the boundaries
+- Choose "special" values (`null`, `0`, min/max values, etc.)
+
+???
+- Max positive, 1, 0, -1, min negative
+
+---
+## Control flow
+
+```
+public static int foo(int a, int b) {
+    int result = 5;
+    if (a > 15) {
+        result = a;
+    }
+    return b > 10
+       ? result + b
+       : result - b; 
+}
+```
+
+--
+
+Idea
+- A piece of code has a finite number of different paths through it
+
+--
+
+Therefore
+- Choose inputs that exercise every path
+
+---
+## Demo
+
+- ASCE 7-16 wind zone generation
+
+???
+- A good showcase of an engineering approach
+- Context: Roofs - https://slideplayer.com/slide/17660078/ - edge types + plan view
+- Context: Cain and banks PDF
+- Context: Permit package - what is the end result
+- Variety of roofs: https://www.google.com/maps/place/506+Viterra+Ct,+Kissimmee,+FL+34759,+USA/@28.1293695,-81.4922752,64m/data=!3m1!1e3!4m5!3m4!1s0x88dd9ddf9248bd4f:0x5032e97b99490ee3!8m2!3d28.1294018!4d-81.4922125
+- Initial approach was to implement this for two simplest roof types, and then take a random roof, and support it in full. Led to edge-cases.
+- Breaking a problem down into smaller parts: https://solardesigntool.atlassian.net/wiki/spaces/GTG/pages/1505984515/ASCE+7-16+wind+pressure+zones
+- There is no algorithm how to end up with "correct" answer
+- Process is (e.g. https://solardesigntool.atlassian.net/browse/LYRA-5506 or uncommitted):
+    - Find examples / list variations
+    - Add test case
+    - Run it, verify results (snapshots)
+    - If something wrong - fix the code
+- Takeaways:
+    - Value-driven prioritization (based on data)
+    - Measurable progress (at least X%): https://solardesigntool.atlassian.net/wiki/spaces/GTG/pages/1514962989/Weekly+team+meeting+11+12+2021
+    - Not possible to implement such feature with sufficient quality without automated testing
+    - Too many combinations possible to be able to regression-test manually
+    - Confidence that types implemented previously still work - makes it easy to fix bugs or add new types
+
+---
+## Testing assignment
+
+- [Unit testing/TDD assignment](https://emokymai.vu.lt/mod/page/view.php?id=106829)
+
+???
+- Take a little time to reflect:
+    - Did you experience a situation where the test case for the new requirement passed, but some of the previous test cases failed?
+    - After you had the initial testing program, did adding new test cases take little time compared to implementing the requirement?
+    - Did you feel differently writing code this way compared to how you usually feel when writing code?
+    - Did you perceive a difference of outcomes between this process of writing code and your usual process (in terms of e.g. code quality, or time it takes to implement things)
+
+---
+class: middle, center
+# Questions?
+
+  </textarea>
+  <script src="https://remarkjs.com/downloads/remark-0.15.0.min.js"></script>
+  <!-- Remark Wiki: https://github.com/gnab/remark/wiki -->
+  <script>
+    const slideshow = remark.create({
+              highlightStyle: 'github',
+              highlightLines: 'true',
+              highlightSpans: true,
+              ratio: '16:9',
+              countIncrementalSlides: false
+    });
+  </script>
+</body>
+</html>
