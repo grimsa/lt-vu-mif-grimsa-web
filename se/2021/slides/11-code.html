@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" href="slides-style.css" type="text/css">
+		<style>
+.semi-transparent {
+  opacity: 0.5
+}
+		</style>
+	</head>
+	<body>
+		<textarea id="source">
+class: center, middle, main-title
+
+# Software Engineering
+Code quality, refactoring, technical debt
+
+---
+## Learning goals
+
+- Able to make a case for "good" code
+- Can explain and reason about refactoring and "Technical debt"
+
+---
+## Code
+
+- The primary artifact
+???
+If code does not work, other artifacts have little utility.
+Example:
+- Code where we have binaries only
+- An error in the documentation will likely go unnoticed if code works correctly
+--
+    - Note: also applies for everything *as code*
+???
+Note: configuration "as code" is also included here.
+--
+- What is "bad code"?
+???
+Give some examples
+--
+- **Code is written for humans, not for computers**
+???
+"We would write in binary if code was written for computers"
+Transiton from punched cards towards natural language
+
+--
+- Desirable qualities of code
+--
+    - Is easy to understand
+--
+    - Is easy to change
+--
+    - Works
+???
+Order is significant here - we may have failing code, but if we can fix it easily, it is still good code
+
+---
+## Books
+
+<a class="pull-left" href="https://www.goodreads.com/book/show/3735293-clean-code">
+    <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1436202607l/3735293._SX318_.jpg" width="75%">
+</a>
+<a class="pull-right" href="https://www.goodreads.com/book/show/4845.Code_Complete">
+  <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1396837641l/4845.jpg" width="75%">
+</a>
+
+???
+Also https://www.goodreads.com/book/show/8677004-the-art-of-readable-code
+
+---
+## Arguments from Clean Code
+
+- The ratio of time spent reading vs. writing is well over 10:1.
+???
+(This and the following arguments are taken from Clean Code book.)
+--
+- Because this ratio is so high, we want the reading of code to be easy, even if it makes the writing harder.
+--
+- Of course, there’s no way to write code without reading it, so making it easy to read actually makes it easier to write.
+
+???
+- Most managers want good code, even when they are obsessing about the schedule. They may defend the schedule and requirements with passion; but that’s their job. It’s your job to defend the code with equal passion.
+- Parallel with hand-washing before surgery. It would be unprofessional (even criminal) to comply with request to skip that in order to operate on more patients.
+- When hand-washing was first recommended to physicians by Ignaz Semmelweis in 1847, it was rejected on the basis that doctors were too busy and wouldn’t have time to wash their hands between patient visits.
+
+---
+exclude: true
+## Aside: SoDra case
+[News article](https://www.15min.lt/mokslasit/straipsnis/technologijos/internete-plinta-atviras-sodros-tinklalapio-kodas-su-keiksmazodziais-646-692047) about a comment found in SoDra JS source code (2016):
+```
+
+// cia nezinau ar geras sprendimas, bet px, veikia
+// atleidus pele
+$( document ).one( 'mouseup', { ind: event.data.index }, function( event ) {
+    // ...
+});
+```
+???
+[Similar code today](view-source:https://gyventojai.sodra.lt/login-globals/assets/js/modules/components.js?r=2)
+
+--
+exclude: true
+<br><br>
+Most managers want good code, even when they are obsessing about the schedule.<br>
+They may defend the schedule and requirements with passion; but that’s their job.<br>
+It’s your job to defend the code with equal passion.
+???
+Parallel with hand-washing before surgery. It would be unprofessional (even criminal) to comply with request to skip that in order to operate on more patients.
+
+When hand-washing was first recommended to physicians by Ignaz Semmelweis in 1847, it was rejected on the basis that doctors were too busy and wouldn’t have time to wash their hands between patient visits.
+
+Not everyone cares. It is OK. But if you aspire to be a well-respected professional - it is one of the first things to practice.
+
+---
+## Code: Easy to understand
+
+- Be consistent
+    - Naming
+???
+User#givenName, getFamilyName, getUserEmail, getAddressString
+--
+    - Style ([Example style guide](https://google.github.io/styleguide/javaguide.html))
+???
+Familiar code is easier to understand
+--
+- Use intention-revealing names
+???
+The name of a variable, function, or class, should answer all the big questions.
+It should tell you why it exists, what it does, and how it is used.
+If a name requires a comment, then the name does not reveal its intent.
+Example:
+- Person vs. UtilityServiceCustomer
+- calculate() vs. calculateAmountToBePaidForLastMonth()
+
+<cite>There are only two hard things in Computer Science: cache invalidation and naming things.</cite>
+--
+- Limit size (i.e. smaller is better)
+???
+Example: PvSystem.Equipment#acNameplateRating vs ElectricalBosComponentsEditorImpl#findArrayWiringBoxesThatMatchSpecifications
+Also shows previous principle: Names should replace comments
+--
+- Use comments only to explain *why*, not *what*
+???
+Example: InverterDefinition#isCompatibleWith, Main#customize, build.gradle
+--
+- Worry about readability, not performance (in non-extreme settings)
+???
+Even then you can have both - e.g. two implementations, one readable (to comprehend and check code coverage), another performant (to use in production). Same test suite.
+--
+- Practice these things during code reviews
+???
+As this is about meaning and cognitive processes. Human judgement is irreplacable here.
+---
+## Code: Easy to change
+
+- Make the code easy to understand
+    - To change any code you have to understand it first
+--
+- Use automated testing
+    - It is *much* easier to change code when you have automated tests
+???
+Also much less stressful. No fear to break things.
+Bowling with guardrails metaphor (iteratively building guardrails one meter at a time).
+--
+- Continuously improve the design of existing code
+    - Term: [Refactoring](https://martinfowler.com/books/refactoring.html)
+    - Note: term is [commonly misused](https://martinfowler.com/bliki/RefactoringMalapropism.html)
+???
+Refactoring (noun): a change made to the internal structure of software to make it easier to understand and cheaper to modify without changing its observable behavior.
+Refactoring (verb): to restructure software by applying a series of refactorings without changing its observable behavior.
+
+Refactoring: small behaviour-preserving changes, not breaking the system for more than a few minutes at a time
+Not refactoring: refactoring a document or large-refactoring (use restructuring instead), moving a button slightly, changing its color, adding a small new feature (implemeting changes)
+
+---
+## Refactoring
+
+> For each desired change, make the change easy (warning: this may be hard), then make the easy change.
+> <br><br>— <cite>Kent Beck</cite>
+
+???
+Example: I have 1000 servers that are configured manually.
+I have to add a new firewall rule in every one of them.
+Currently change is not easy (it is time-consuming).
+Making the change easy could be writing a script, or even migrating to infrastructure-as-code approach (hard!).
+But after that making the change would be a breeze.
+
+Note - no black and white, as he also said: "Sometimes when the work is hard it signals that we're doing it wrong. Sometimes it's just hard."
+
+---
+## Technical debt
+
+- A metaphor for explaining *[accidental complexity](https://g.rimsa.lt/on-complexity/)* / *cruft*
+--
+    - Very useful for explaining things to non-technical people
+--
+- [Technical debt](https://martinfowler.com/bliki/TechnicalDebt.html) is the sum of all avoidable internal deficiencies
+???
+But only the avoidable/accidental ones
+--
+- Adding *technical debt* it is unavoidable
+   - (i.e. we borrow more and more)
+--
+- If we do nothing, maintainance gets increasingly complicated
+   - (i.e. more and more of our budget goes to paying interest on the debt)
+
+---
+## Impact of technical debt
+<img src="https://martinfowler.com/articles/is-quality-worth-cost/cruft-impact.png" width="80%">
+
+.footnote[
+<cite>Source: [Is High Quality Software Worth the Cost?](https://martinfowler.com/articles/is-quality-worth-cost.html)</cite>
+]
+
+---
+## Legacy software
+
+- Is useful and successful software
+--
+ that over time became a victim of its own success
+--
+- "A system without tests" — <cite>Michael Feathers</cite>
+--
+- Nobody knows in full what the system does or how it works
+    - Change impact is difficult to estimate
+    - Regression testing is complicated
+--
+- This forces to optimize for risk reduction, rather than overall complexity
+    - Suboptimal designs add accidental complexity
+--
+- Complexity accumulates
+    - Narrowing design space
+    - Making comprehension harder
+???
+Spiral
+
+---
+## Things that help maintenance
+
+- Adding automated regression tests
+--
+- Removing features
+--
+- Refactoring
+--
+- Creating documentation
+
+--
+All of the above take *time* and *effort*
+
+
+---
+## Key takeaways
+
+- Code is written for humans
+--
+- Code should be optimized for readability
+--
+- Code reviews are probably the most important practice to have in your team
+--
+- Technical debt is a useful metaphor for discussing the state of the codebase
+
+---
+## Reading assignment
+
+Mandatory:
+
+- Article: [Is High Quality Software Worth the Cost? by Martin Fowler](https://martinfowler.com/articles/is-quality-worth-cost.html)
+
+--
+<span>Recommended:</span>
+
+- [https://thisoldapp.online/episodes/clean-code-is-covered-in-caca](Some criticism of the term "clean code")
+- A sequence of 4 blog posts:
+    - [First one](https://harthur.wordpress.com/2013/01/24/771/)
+    - [Ted Neward's response](http://blogs.tedneward.com/post/on-the-dark-side-of-craftsmanship/)
+    - [Robert C. Martin's response to Ted](https://blog.cleancoder.com/uncle-bob/2013/01/30/The-Craftsman-And-The-Laborer.html)
+    - [And one tangential opinion](https://geekyprimitives.com/2013/02/21/stop-refactoring/)
+???
+While high quality code is important, we should be mindful of how we communicate about it.
+--
+- 40 min hands-on refactoring talk: [Succession by Katrina Owen](https://www.youtube.com/watch?v=59YClXmkCVM)
+
+---
+class: middle, center
+# Questions?
+
+</textarea>
+<script src="https://remarkjs.com/downloads/remark-0.15.0.min.js"></script>
+<!-- Remark Wiki: https://github.com/gnab/remark/wiki -->
+<script>
+  const slideshow = remark.create({
+            highlightStyle: 'github',
+            highlightLines: 'true',
+            highlightSpans: true,
+            ratio: '16:9',
+            countIncrementalSlides: false
+  });
+</script>
+</body>
+</html>
