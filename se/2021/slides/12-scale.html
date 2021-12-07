@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" href="slides-style.css" type="text/css">
+		<style>
+.semi-transparent {
+  opacity: 0.5
+}
+		</style>
+	</head>
+	<body>
+		<textarea id="source">
+class: center, middle, main-title
+
+# Software Engineering
+Software engineering at scale
+
+---
+## Organizational matters
+
+- Project presentations:
+    - Group 3: 2021-12-17 10:15
+    - Group 2: 2021-12-17 12:00 
+    - Group 1: 2021-12-21 10:15
+--
+- Remaining lectures:
+    - 2021-12-14 10:15
+    - 2021-12-21 around 12:15 (after project presentations complete)
+--
+- Exam:
+    - 2022-01-18 10:00
+    - Remote, in writing
+
+---
+class: center, middle
+
+## Part 1: Failures
+
+---
+## Outage examples
+
+- Forest logging permit system
+    - Retrieving permits for one county did not work
+--
+    - No big deal
+--
+- E-health system 2020 July outage
+    - Service outage started [07-20](https://www.vz.lt/paslaugos/2020/07/21/registru-centras-atstate-dauguma-sistemudar-neveikia-esvekata)
+    - Service restored on [07-29](https://www.registrucentras.lt/naujienos/index.php?mod=news&act=view&id=46466)
+???
+Dydis: 90 TB duomenų, įkeliama 100k dokumentų per dieną
+
+--
+- [AWS 2020 November outage](https://www.washingtonpost.com/business/economy/amazon-web-services-outage-stymies-businesses/2020/11/25/b54a6106-2f4f-11eb-860d-f7999599cbc2_story.html) in US East region
+    - Some services impacted for more than 24h
+    - Most people in US likely noticed
+
+???
+- Wednesday, ~1 day recovery
+- AWS has $45 bn sales (LT GDP ~$56 bn) (2021 data)
+- 32 % cloud services market share (2021 data)
+- Consider business cost of outages
+
+---
+## Different systems have different properties
+
+- System criticality
+    - In how much trouble are we in if it does not work?
+--
+- System availability requirements
+    - "Most of the time"
+    - SLAs, e.g. "99.999% requests must be fulfilled in less than 100 ms"
+???
+Formal and informal requirements
+
+---
+## Availability
+
+- Understood from a user's point of view
+--
+- Is the system *available* right now?
+--
+- Let's say a system is
+    - Not responding at all
+--
+    - Not responding for 10% of users
+--
+    - 1% of operations fail
+--
+    - Some operations take two times longer than expected
+--
+    - A few non-critical functions do not work
+
+---
+## High availability
+
+- [The higher the availability](https://en.wikipedia.org/wiki/High_availability#Percentage_calculation), the harder it is to achieve
+    - Going from 98% to 99% is fairly easy
+    - Going from 99.99% to 99.999% is much harder
+--
+- Achieved through
+    - No single point of failure (redundancy)
+--
+    - Reliable crossover (switching)
+--
+    - Failure detection (monitoring)
+--
+- More on this:
+    - [Site reliability engineering](https://landing.google.com/sre/books/)
+    - [Release It!](https://www.goodreads.com/book/show/1069827.Release_It_#)
+
+---
+## What do outages look like from the inside?
+
+- Small project (~10-20 engineers)
+    - Client representative calls Project manager
+    - Project manager calls one/two key people (developer / infrastructure admin)
+    - People investigate, identify problem, think how to mitigate/fix
+???
+Permanent fix is planned after
+--
+- A mid-size bank (4000+ engineers)
+    - Services categorized by business impact
+    - Many roles (development, operations, support, situation management, etc.)
+    - Defined processes and metrics
+???
+SIMA - calls every 30 min with representatives, managers, postmortems
+Metrics - number of P0/P1 incidents KPI
+
+--
+- Internet-scale company (70 000+ engineers)
+    - ???
+
+???
+- At any point in time, something is broken/failing
+
+---
+## Trends
+
+- Failures are inevitable
+???
+Prepare for them! (Release It!)
+--
+- "The bigger they are, the harder they fall" :)
+--
+    - More complex failure modes
+    - [Cascading failures](https://en.wikipedia.org/wiki/Cascading_failure)
+    - [Grey failrues](https://blog.acolyer.org/2017/06/15/gray-failure-the-achilles-heel-of-cloud-scale-systems/)
+--
+- The more complex the system, the more discipline is required
+    - Specialization
+    - Processes (change management, support, incident response)
+    - Metrics
+    - Monitoring
+    - Automation
+
+???
+Things we talk about in this course! Building a skyscraper vs. building a bicycle shed.
+
+---
+class: center, middle
+
+## Part 2: Communication
+
+---
+## Communication in general
+
+- Idea → transport → idea
+???
+Even for the author of the idea! Examples:
+- Junior asks a senior about things, figures out as they ask
+- Rubber duck
+--
+- Losses everywhere!
+???
+- Netiksliai išsireiškiau
+- Autocorrect'as ištaisė / ne viską užkrovė / ne viską perskaitė
+- Ne taip perskaitė
+- Ne taip suprato (sąvokos/mental modeliai skirtingi)
+--
+- Competing ideas everywhere!
+???
+Other ideas competing for attention
+--
+- Goal: getting the *right* idea across
+--
+???
+All forms:
+- spoken (conversations, meetings, presentations)
+- written (chats, emails, documents, books), etc. Manuals, memos, meeting minutes, laws.
+
+---
+## The cost of communication
+
+- 15 people, daily 15 min meeting = ??? EUR
+???
+- Then add some buffer to join/leave/get a coffee
+- 20 days per month
+- 50 EUR/h rate
+
+--
+- 2 people, building an app for 2 months = ??? EUR
+???
+- 2x 160h
+Ruby app was scrapped and had to be rewritten in Java
+???
+Discussions - 126h this year - https://track.toggl.com/reports/summary/2253729/clients/42738614/description/Discussion/period/thisYear/users/3523559
+
+--
+- A project that is delayed... and delayed... and delayed
+???
+Likely a communication problem (final scope not known, or required effort not known)
+
+--
+- Two people of equivalent skill, except for communication. Salary difference?
+
+---
+## Trends
+
+- Scale, specialization, and higher complexity requires more coordination
+--
+- Remote work is pushing more and more communication into async (written, recorded)
+
+---
+## Some tips for effective communication
+
+- Universal
+--
+    - Relevant to the audience
+???
+Who is going to attend? What do they need to know? What is your goal? What is the main thing you want to communicate?
+--
+    - Short, and to the point
+???
+Less is more. "I did not have time to write a short letter, so I wrote a long one instead".
+In the context of presentations - if time limit is 10 minutes, aim for 5-7 mins instead.
+Do not rush.
+--
+    - Structured
+???
+- Have a clear, simple, minimal structure.
+- For repetitive communication it should also be consistent.
+- Example: weekly report status
+- Every meeting should have a clear purpose, outcome, and preparation
+???
+https://www.amazon.com/survived-another-meeting-should-email/dp/B01NCTTSS6/ref=pd_lpo_229_t_1/145-1888026-3808436
+https://docs.google.com/document/d/1emREo5B1MBi8YMwyc9CHuwrrzIQzfZvcIUjewReSlB8/edit
+--
+- Other
+    - Practiced
+???
+Preparation is key. Practice - time with a clock, film yourself.
+Presentation and public speaking skills are trainable
+--
+    - Open to feedback
+???
+- Discussions - everyone should contribute their ideas to a shared pool of meaning
+- Conflicts: push vs. pull. 2x Push = standoff
+--
+    - Balanced between fact and feeling
+???
+When trying to convince. Visi mes žmonės ir ryšį su kitais žmonėm ar net idėjomis kuriame per jausmus.
+--
+    - Using one strong argument to justify a point
+???
+When trying to convince. Kartojimas ar papildomi argumentai "atskiedžia" ir susilpnina (be to, tada opozicija gali atsakyti į silpnus argumentus).
+--
+    - Recorded
+???
+At least the decisions should be documented and published
+
+---
+class: middle, center
+# Questions?
+
+</textarea>
+<script src="https://remarkjs.com/downloads/remark-0.15.0.min.js"></script>
+<!-- Remark Wiki: https://github.com/gnab/remark/wiki -->
+<script>
+    const slideshow = remark.create({
+            highlightStyle: 'github',
+            highlightLines: 'true',
+            highlightSpans: true,
+            ratio: '16:9',
+            countIncrementalSlides: false
+    });
+</script>
+</body>
+</html>
